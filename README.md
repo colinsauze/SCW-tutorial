@@ -7,7 +7,7 @@ This lesson has been (heavily) adapted from the Data Carpentry Cloud Genomics le
 
 Original contributors:
 * [Chris Fields](http://www.bioperl.org/wiki/User:Cjfields)
-* [Bob Freeman] (http://twitter.com/devbioinfoguy)
+* [Bob Freeman](http://twitter.com/devbioinfoguy)
 * Adina Howe
 * Andréa Matsunaga
 * [Stephen Turner](https://twitter.com/genetics_blog)
