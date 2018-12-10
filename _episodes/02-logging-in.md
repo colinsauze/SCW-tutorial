@@ -50,7 +50,7 @@ These figures may still be subject to some change and might have been sourced fr
 |-------|----|----|------|----|------|
 |Swansea Compute|122|40|376GB||
 |Swansea GPU|4|40|376GB|Nvidia V100 (5120 core, 16GB RAM)|
-|Swansea Data Lake|1|72||1500GB|Installed with Swansea system, not available for general use yet. Intended for Hadoop and Elastic Stack users.|
+|Swansea Data Lake|1|72|1500GB|Installed with Swansea system, not available for general use yet. Intended for Hadoop and Elastic Stack users.|
 
 
 |Cluster|Number of Nodes|Cores per node|RAM|Other|
@@ -60,9 +60,9 @@ These figures may still be subject to some change and might have been sourced fr
 |Cardiff High Memory|26|40|376GB||
 |Cardiff GPU|13|40|376GB|2x Nvidia P100 (3584 core, 16GB RAM)|
 |Cardiff Dev|2|40|196GB||
-|Cardiff Data Lake|2|?|Skylake|?|Will be installed later. Intended for Hadoop and Elastic Stack users.|
+|Cardiff Data Lake|2|?|?|Will be installed later. Intended for Hadoop and Elastic Stack users.|
 
-Aberystwyth users are expected to use the Swansea system and will need to make a case for why they would need to use the Cardiff system. Bangor users are expected to use Cardiff.
+Aberystwyth and Swansea users are expected to use the Swansea system and will need to make a case for why they would need to use the Cardiff system. Bangor users are expected to use Cardiff.
 
 
 ### Slurm
