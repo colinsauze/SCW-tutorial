@@ -231,5 +231,5 @@ hello world 1 a
 hello world 2 b
 hello world 3 c
 ~~~
-~{: .output}
+{: .output}
 
