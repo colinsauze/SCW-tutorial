@@ -16,24 +16,24 @@ keypoints:
 - "MPI can be used to split a task into components and have several nodes run them."
 ---
 
-Lola Lazy is now confident enough to work with the batch system of the cluster. She now turns her attention to the problem at hand, i.e. estimating the value of _Pi_ to very high precision. 
+Lola Lazy is now confident enough to work with the batch system of the cluster. She now turns her attention to the problem at hand, i.e. estimating the value of _Pi_ to very high precision.
 
-One of her more experienced colleagues has suggested to her, to use the _Message Passing Interface_ (in short: _MPI_) for that matter. As she has no prior knowledge in the field, accepting this advice is as good as trying some other technique on her how. She first explores the documentation of MPI a bit to get a feeling about the philosophy behind this approach. 
+One of her more experienced colleagues has suggested to her, to use the _Message Passing Interface_ (in short: _MPI_) for that matter. As she has no prior knowledge in the field, accepting this advice is as good as trying some other technique on her how. She first explores the documentation of MPI a bit to get a feeling about the philosophy behind this approach.
 
 > ## Message Passing Interface
-> A long time before we had smart phones, tablets or laptops, [compute clusters](http://www.phy.duke.edu/~rgb/brahma/Resources/beowulf/papers/ICPP95/icpp95.html) were already around and consisted of interconnected computers that had merely enough memory to show the first two frames of a movie (`2*1920*1080*4 Bytes = 16 MB`). 
-> However, scientific problems back than were equally demanding more and more memory than today. 
+> A long time before we had smart phones, tablets or laptops, [compute clusters](http://www.phy.duke.edu/~rgb/brahma/Resources/beowulf/papers/ICPP95/icpp95.html) were already around and consisted of interconnected computers that had merely enough memory to show the first two frames of a movie (`2*1920*1080*4 Bytes = 16 MB`).
+> However, scientific problems back than were equally demanding more and more memory than today.
 > To overcome the lack of available hardware memory, [specialists from academia and industry](https://en.wikipedia.org/wiki/Message_Passing_Interface#History) came about with the idea to consider the memory of several interconnected compute nodes as one. Given a standardized software that synchronizes the various states of memory between the client/slave nodes during the execution of driver application through the network interfaces. With this performing large calculations that required more memory than each individual cluster node can offer was possible. Moreover, this technique by passing messages (hence _Message Passing Interface_ or _MPI_) on memory updates in a controlled fashion allowed to write parallel programs that were capable of running on a diverse set of cluster architectures.
 
 ![Schematic View of a Compute Cluster with 4 nodes (12 cores each)]({{ page.root }}/fig/cluster_schematic.svg)
 
-Lola becomes curious. She wants to experiment with this parallelization technique a bit. For this, she would like to print the name of the node where a specific driver application is run. 
+Lola becomes curious. She wants to experiment with this parallelization technique a bit. For this, she would like to print the name of the node where a specific driver application is run.
 
 ~~~
 $ cat call_hostname.sh
 #!/bin/bash
 
-###                                                                                                                                                                                        
+###                                                                                                                                                                                       
 #SBATCH --job-name=mpi_hostname
 #SBATCH --output=mpi_hostname.out.%J.%N
 #SBATCH --error=mpi_hostname.err.%J.%N
@@ -91,7 +91,7 @@ As the figure above shows, 12 instances of `hostname` were called on `scs0001` a
 
 Like a reflex, Lola asks how to write these MPI programs. Her colleague points out that she needs to program the languages that MPI supports, such as FORTRAN, C, C++, python and many more. As Lola is most confident with python, her colleague wants to give her a head start using `mpi4py` and provides a minimal example. This example is analogous to what Lola just played with. This python script called [`print_hostname.py`]({{ page.root }}/code/print_hostname.py) prints the number of the current MPI rank (i.e. the unique id of the execution thread within one mpirun invocation), the total number of MPI ranks available and the hostname this rank is currently run on.
 
-Before we can run Mpi4py programs we need to install the module through pip3. Installing the pip module also requires the mpi module to be loaded. The following commands will install mpi4py. 
+Before we can run Mpi4py programs we need to install the module through pip3. Installing the pip module also requires the mpi module to be loaded. The following commands will install mpi4py.
 
 ~~~
 $ module load hpcw
@@ -108,7 +108,7 @@ Now we can run the program by putting the following into py_mpi_hostname.sh
 #!/bin/bash
 
 
-###                                                                                                                                                                                        
+###                                                                                                                                                                                       
 #SBATCH --job-name=py_mpi_hostname
 #SBATCH --output=py_mpi_hostname.out.%J.%N
 #SBATCH --error=py_mpi_hostname.err.%J.%N
@@ -153,8 +153,8 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 
 > ## Does `mpirun` really execute commands in parallel?
 >
-> Launch the command `date` 16 times across your cluster. What do you observe? Play around with the precision of date through its flags (`+%N` for example) and study the distribution of the results.  
-> 
+> Launch the command `date` 16 times across your cluster. What do you observe? Play around with the precision of date through its flags (`+%N` for example) and study the distribution of the results. 
+>
 > > ## Solution
 > > ~~~
 > > #!/bin/sh
@@ -173,37 +173,37 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 >
 > Download the [`print_hostname.py`]({{ page.root }}/code/print_hostname.py) script if you haven't already (module load http-proxy ; wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py)
 > Open the `print_hostname.py` script with your editor and use the python3 `datetime` module to print the time of day next to the host name and rank number.
-> 
+>
 > > ## Solution
 > > There are lots of possibly variations on this. Here's a simple one:
-> > 
+> >
 > > ~~~
 > > from datetime import datetime
 > > print(str(datetime.now()))
 > > ~~~
 > > {: .python}
-> > 
+> >
 > > or
-> > 
+> >
 > > ~~~
 > > import time
 > > print(time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime()))
 > > ~~~
 > > {: .python}
-> > 
+> >
 > > or
-> > 
+> >
 > > ~~~
 > > import time
 > > print(time.time())
 > > ~~~
 > > {: .python}
-> > 
+> >
 > > this gives seconds and microseconds since January 1st 1970
 > {: .solution}
 {: .challenge}
 
-To finalize this day's work, Lola wants to tackle distributed memory parallelization using the Message Passing Interface (MPI). For this, she uses the `mpi4py` library that is pre-installed on her cluster. She again starts from the [serial implementation]({{ page.root }}/code/serial_numpi.py). At first, she expands the include statements a bit. 
+To finalize this day's work, Lola wants to tackle distributed memory parallelization using the Message Passing Interface (MPI). For this, she uses the `mpi4py` library that is pre-installed on her cluster. She again starts from the [serial implementation]({{ page.root }}/code/serial_numpi.py). At first, she expands the include statements a bit.
 
 ~~~
 from mpi4py import MPI
@@ -214,7 +214,7 @@ rank = comm.Get_rank()
 ~~~
 {: .python }
 
-These 4 lines will be very instrumental through out the entire MPI program. The entire MPI software stack builds upon the notion of a communicator. Here, we see the MPI.COMM_WORLD communicator by which all processes that are created talk to each other. We will use it as a hub to initiate communications among all participating processes. Subsequently, we ask `comm` how many participants are connected by calling `comm.Get_size()`. Then we'll ask the communicator, what rank the current process is `comm.Get_rank()`. And with this, Lola has entered the dungeon of MPI. 
+These 4 lines will be very instrumental through out the entire MPI program. The entire MPI software stack builds upon the notion of a communicator. Here, we see the MPI.COMM_WORLD communicator by which all processes that are created talk to each other. We will use it as a hub to initiate communications among all participating processes. Subsequently, we ask `comm` how many participants are connected by calling `comm.Get_size()`. Then we'll ask the communicator, what rank the current process is `comm.Get_rank()`. And with this, Lola has entered the dungeon of MPI.
 
 > ## Every Line Is Running in Parallel!
 > As discussed in the previous section, a call to `<your scheduler> mpirun <your program>` will do the following:
@@ -282,7 +282,7 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
 ~~~
 #!/bin/bash
 
-###                                                                                                                                                                                        
+###                                                                                                                                                                                       
 #job name
 #SBATCH --job-name=mpi_numpi
 #job stdout file
@@ -293,8 +293,8 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
 
 module load python/3.5.1
 module load mpi
-mpirun python3 mpi_numpi.py 1000000000                           
- 
+mpirun python3 mpi_numpi.py 1000000000                          
+
 $ sbatch -n 48 mpi_numpi.sh
 ~~~
 {: .bash}
@@ -311,17 +311,17 @@ sys     0m0.165s
 ~~~
 {: .output}
 
-Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on HPC Wales we can only use 25 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use she decided to write a small script which varied the number of cores being used. 
+Note here, that we are now free to scale this application to hundreds of cores if we wanted to. We are only restricted by Amdahl's law, the size of our compute cluster and any limits the administrators apply (on HPC Wales we can only use 25 nodes at once). Before finishing the day, Lola looks at the run time that her MPI job consumed. `3.92` seconds for a job that ran on six times as much cores as here parallel implementation before (which took `56s` for the same configuration). To test the performance and work out how many cores she should use she decided to write a small script which varied the number of cores being used.
 
 ~~~
 for i in {seq 1 48} ; do
-    sbatch -n $i mpi_numpi.sh 
+    sbatch -n $i mpi_numpi.sh
     sleep 2m
 done
 ~~~
 {: .bash}
 
-She collects the results into a spreadsheet and graphs them. For comparison she also graphs the performance of the PyMP job running on a single node. These show that 
+She collects the results into a spreadsheet and graphs them. For comparison she also graphs the performance of the PyMP job running on a single node. These show that
 
 That is quite an achievement of the day!
 
@@ -338,14 +338,14 @@ That is quite an achievement of the day!
 
 > ## Use the batch system!
 >
-> Launch the serial and MPI version of the pi_estimate using the batch system. Compare the run times of each. 
+> Launch the serial and MPI version of the pi_estimate using the batch system. Compare the run times of each.
 > Note that with less than 100,000,000 samples there won't be significant differences between runtimes.
 {: .challenge}
 
 > ## Don't Stress the Network
 >
-> The MPI implementation given above transmits only the number of points in the circle to the main program. Rewrite the program so that each rank generates the random numbers and sends them back to rank 0. 
-> 
+> The MPI implementation given above transmits only the number of points in the circle to the main program. Rewrite the program so that each rank generates the random numbers and sends them back to rank 0.
+>
 > Submit the job and look at the time it took. What do you observe? Why did the run time change?
 > > ## Solution
 > > The performance gets significantly worse as a lot more data needs to be sent. When running on different nodes this will particularly bad as transferring data over the interconnect is much slower than locally.

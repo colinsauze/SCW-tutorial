@@ -14,13 +14,13 @@ keypoints:
 - "The estimation of pi with the Monte Carlo method is a compute bound problem because pseudo-random numbers are just algorithms."
 ---
 
-Lola is told that her predecessors all worked on the same project. A high performance calculation that is able to produce a high precision estimate of Pi. Even though calculating Pi can be considered a solved problem, this piece of code is used at the institute to benchmark new hardware. So far, the institute has only acquired larger single machines for each lab to act as work horse per group. But currently, need for distributed computations has arisen and hence a distributed code is needed, that yields both simplicity, efficiency and scalability. 
+Lola is told that her predecessors all worked on the same project. A high performance calculation that is able to produce a high precision estimate of Pi. Even though calculating Pi can be considered a solved problem, this piece of code is used at the institute to benchmark new hardware. So far, the institute has only acquired larger single machines for each lab to act as work horse per group. But currently, need for distributed computations has arisen and hence a distributed code is needed, that yields both simplicity, efficiency and scalability.
 
-The algorithm was pioneered by _Georges-Louis Leclerc de Buffon_ in _1733_. 
+The algorithm was pioneered by _Georges-Louis Leclerc de Buffon_ in _1733_.
 
 ![Estimating Pi with Buffon's needle]({{ page.root }}/fig/estimate_pi.svg)
 
-Overlay a unit square over a quadrant of a circle. Throw `m` random number pairs and count how many of the pairs lie inside the circle (the number pairs inside the circle is denoted by `n`). `Pi` is then approximated by: 
+Overlay a unit square over a quadrant of a circle. Throw `m` random number pairs and count how many of the pairs lie inside the circle (the number pairs inside the circle is denoted by `n`). `Pi` is then approximated by:
 
 ~~~
      4*m
@@ -36,7 +36,7 @@ import numpy
 np.random.seed(2017)
 
 def inside_circle(total_count):
-    
+   
     x = np.float32(np.random.uniform(size=total_count))
     y = np.float32(np.random.uniform(size=total_count))
 
@@ -44,13 +44,13 @@ def inside_circle(total_count):
 
     filtered = np.where(radii<=1.0)
     count = len(radii[filtered])
-    
-    return count 
-    
+   
+    return count
+   
 def estimate_pi(total_count):
 
     count = inside_circle(total_count)
-    return (4.0 * count / total_count) 
+    return (4.0 * count / total_count)
 
 ~~~
 {: .python}
@@ -85,10 +85,10 @@ $ pip3 install --user line_profiler
 ~~~
 {: .bash }
 
-The profiler can be started with the command 
+The profiler can be started with the command
 
 ~~~
-$ ~/.local/bin/kernprof 
+$ ~/.local/bin/kernprof
 ~~~
 {: .bash}
 
@@ -101,7 +101,7 @@ Note that on systems where pip can install to system directories the kernprof (o
 > - python: [line_profiler](https://github.com/rkern/line_profiler), [prof](https://docs.python.org/3.6/library/profile.html)
 > - java script: [firebug](https://github.com/firebug/firebug)
 > - ruby: [ruby-prof](https://github.com/ruby-prof/ruby-prof)
-> - C/C++: [xray](https://llvm.org/docs/XRay.html), [perf](https://perf.wiki.kernel.org/index.php/Main_Page), 
+> - C/C++: [xray](https://llvm.org/docs/XRay.html), [perf](https://perf.wiki.kernel.org/index.php/Main_Page),
 > - R: [profvis](https://github.com/rstudio/profvis)
 {: .callout }
 
@@ -167,10 +167,10 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     26         1            2      2.0      0.0      n_samples = 10000
     27         1            1      1.0      0.0      if len(sys.argv) > 1:
     28         1            3      3.0      0.0          n_samples = int(sys.argv[1])
-    29                                           
+    29                                          
     30         1      2078840 2078840.0    100.0      my_pi = estimate_pi(n_samples)
     31         1           11     11.0      0.0      sizeof = np.dtype(np.float32).itemsize
-    32                                           
+    32                                          
     33         1           50     50.0      0.0      print("[serial version] required memory %.3f MB" % (n_samples*sizeof*3/(1024*1024)))
     34         1           23     23.0      0.0      print("[serial version] pi is %f from %i samples" % (my_pi,n_samples)
 ~~~
@@ -209,7 +209,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
     19                                           @profile
     20                                           def estimate_pi(total_count):
-    21                                           
+    21                                          
     22         1      2073595 2073595.0    100.0      count = inside_circle(total_count)
     23         1            5      5.0      0.0      return (4.0 * count / total_count)
 ~~~
@@ -250,51 +250,51 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
      7                                           @profile
      8                                           def inside_circle(total_count):
-     9                                           
+     9                                          
     10         1       749408 749408.0     36.7      x = np.float32(np.random.uniform(size=total_count))
     11         1       743129 743129.0     36.4      y = np.float32(np.random.uniform(size=total_count))
-    12                                           
+    12                                          
     13         1       261149 261149.0     12.8      radii = np.sqrt(x*x + y*y)
-    14                                           
+    14                                          
     15         1       195070 195070.0      9.6      filtered = np.where(radii<=1.0)
     16         1        93290  93290.0      4.6      count = len(radii[filtered])
-    17                                           
+    17                                          
     18         1            2      2.0      0.0      return count
 ~~~
 
-So generating the random numbers appears to be the bottleneck as it accounts for 37+36=73% of the total runtime time. 
+So generating the random numbers appears to be the bottleneck as it accounts for 37+36=73% of the total runtime time.
 So this is a prime candidate for acceleration.
 
 > ## Word count
 >
 > Download [this python script]({{ page.root }}/code/count_pylibs.py) to your current directory. Run it by executing:
-> 
+>
 > ~~~~~
 > $ python3 count_pylibs.py
 > 4231827 characters and 418812 words found in standard python libs
 > ~~~~~
 > {: .bash}
-> 
-> Use the `line_profile` module to find the hot spot in this program! 
+>
+> Use the `line_profile` module to find the hot spot in this program!
 > > ## Solution
-> > 
+> >
 > > ~~~~~
 > > Timer unit: 1e-06 s
-> > 
+> >
 > > Total time: 0.334168 s
 > > File: ./count_pylibs_annotated.py
 > > Function: main at line 38
-> > 
+> >
 > > Line #      Hits         Time  Per Hit   % Time  Line Contents
 > > ==============================================================
 > >     38                                           @profile
 > >     39                                           def main():
-> >     40                                           
+> >     40                                          
 > >     41         1        63994  63994.0     19.2      text = load_text()
 > >     42         1            5      5.0      0.0      nchars = len(text)
 > >     43         1       270108 270108.0     80.8      nwords = word_count(text)
 > >     44         1           53     53.0      0.0      print("%i characters and %i words found in standard python lib" % (nchars, nwords))
-> >     45                                           
+> >     45                                          
 > >     46         1            2      2.0      0.0      if len(text):
 > >     47         1            6      6.0      0.0          sys.exit(0)
 > >     48                                               else:
@@ -305,13 +305,13 @@ So this is a prime candidate for acceleration.
 {: .challenge}
 
 > ## Faster is always better, right?
-> 
-> Pair up and discuss the implementation of count_pylibs_annotated.py from the previous exercise. Discuss and answer the following points: 
-> 1. Find other ways to implement the word count without parallelizing the code! 
+>
+> Pair up and discuss the implementation of count_pylibs_annotated.py from the previous exercise. Discuss and answer the following points:
+> 1. Find other ways to implement the word count without parallelizing the code!
 > 2. For every alternative implementation found in 1., check the output of the program. Did the number of words change? Could such a check be automated?
 > 3. Compare the runtimes that you achieved throughout this exercise. Was your time worth it?
 >
 > > ## Solution
-> One could use the 'count' method of strings and just count the words by using the number of spaces and add 1. Based on the assumption that our input text consists of sentences only, this can provide an estimate of the words. In this case, this is far from accurate as source code contains tabs, newlines etc to distinguish words. However, the `count` method improves runtime by more than one order of magniture in comparison to the `re.split` approach. Take away: Real life is a balance. But above all, your code should produce the correct result. 
+> One could use the 'count' method of strings and just count the words by using the number of spaces and add 1. Based on the assumption that our input text consists of sentences only, this can provide an estimate of the words. In this case, this is far from accurate as source code contains tabs, newlines etc to distinguish words. However, the `count` method improves runtime by more than one order of magniture in comparison to the `re.split` approach. Take away: Real life is a balance. But above all, your code should produce the correct result.
 > {: .solution}
 {: .challenge}

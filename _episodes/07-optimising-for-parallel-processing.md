@@ -3,9 +3,9 @@ title: "Optimising for Parallel Processing"
 author: "Colin Sauze"
 teaching: 15
 exercises: 0
-questions: 
+questions:
  - "How can I run several tasks from a single Slurm job."
-objectives: 
+objectives:
  - "Understand how to use GNU Parallel to run multiple programs from one job"
 keypoints:
  - "GNU Parallel lets a single Slurm job start multiple subprocesses"
@@ -18,7 +18,7 @@ keypoints:
 
 ## Running a job on multiple cores
 
-By default most programs will only run one job per node, but all SCW/HPCW nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance. 
+By default most programs will only run one job per node, but all SCW/HPCW nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance.
 
 A crude way to achieve this is to have our job submission script just run multiple processes and background each one with the `&` operator.
 
@@ -35,7 +35,7 @@ A crude way to achieve this is to have our job submission script just run multip
 
 command1 &
 command2 &
-command3 
+command3
 ~~~
 {: .bash}
 
@@ -50,19 +50,19 @@ This method has its limits if we want to run multiple tasks after the first ones
 
 GNU Parallel is a utility specially designed to run multiple parallel jobs. It can execute a set number of tasks at a time and when they are complete run more tasks.
 
-GNU Parallel can be loaded a module called "parallel". Its syntax is a bit complex, but its very powerful. 
+GNU Parallel can be loaded a module called "parallel". Its syntax is a bit complex, but its very powerful.
 
 
 ### A simple GNU Parallel example
 
-For this example we'll just run on a quick test on the head node. First we have to load the module for parallel. This is only available via the legacy HPC Wales modules which have to be activated by loading the module called "hpcw". 
+For this example we'll just run on a quick test on the head node. First we have to load the module for parallel. This is only available via the legacy HPC Wales modules which have to be activated by loading the module called "hpcw".
 
 `module load hpcw`
 `module load parallel`
 
 ~~~
 #### Citing Software
-Each time you run GNU parallel it will remind that you academic tradition requires you to cite the software you used. You can stop this message by running `parallel --citation` once and parallel will then remember not to show this message anymore. Running this will also show you the Bibtex code for citing parallel in your papers. 
+Each time you run GNU parallel it will remind that you academic tradition requires you to cite the software you used. You can stop this message by running `parallel --citation` once and parallel will then remember not to show this message anymore. Running this will also show you the Bibtex code for citing parallel in your papers.
 ~~~
 {: .callout}
 
@@ -72,7 +72,7 @@ The command below will run ls to list all the files in the current directory and
 
 As a short hand we could have also run the command
 
-`ls | parallel echo` 
+`ls | parallel echo`
 
 and it would produce the same output.
 
@@ -80,16 +80,16 @@ An alternate syntax for the same command is:
 
 `parallel echo {1} ::: $(ls)`
 
-Here we specify what command to run first and the put the data to process second, after the `:::`. 
+Here we specify what command to run first and the put the data to process second, after the `:::`.
 
 
 ### A more complex example
 
-As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfici Gyre. She has 1520 data files, each of which measure the relative abundnace of 300 different proteins. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample. 
+As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfici Gyre. She has 1520 data files, each of which measure the relative abundnace of 300 different proteins. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample.
 
 #### Downloading the Data
 
-First we need to download Nelle's data from the Software Carpentry website. This can be downloaded with the wget command, the files then need to be extracted from the zip archive with the unzip command. 
+First we need to download Nelle's data from the Software Carpentry website. This can be downloaded with the wget command, the files then need to be extracted from the zip archive with the unzip command.
 
 `wget http://swcarpentry.github.io/shell-novice/data/data-shell.zip`
 `unzip data-shell.zip`
@@ -107,16 +107,16 @@ Nelle needs to run a program called `goostats` on each file to process it. Durin
 `    bash goostats $datafile stats-$datafile`
 `done`
 
-The `ls NENE*[AB].txt` command lists all the files which start with "NENE" and end either A.txt or B.txt. The for loop will work through the list of files produced by ls one by one and runs goostats on each one. 
+The `ls NENE*[AB].txt` command lists all the files which start with "NENE" and end either A.txt or B.txt. The for loop will work through the list of files produced by ls one by one and runs goostats on each one.
 
 Lets convert this process to run in parallel by using GNU Parallel instead. By running
 
-`ls NENE*[AB].txt | parallel goostats {1} stats-{1}` 
+`ls NENE*[AB].txt | parallel goostats {1} stats-{1}`
 
-We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we run the time command before both the serial and parallel versions of this process we should see the parallel version runs several times faster. 
+We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we run the time command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
 
 
- 
+
 ### Running Parallel under Slurm
 
 First lets create a job submission script and call it `parallel.sh`.
@@ -136,7 +136,7 @@ module load hpcw
 module load parallel
 
 # Define srun arguments:
-srun="srun -n1 -N1" 
+srun="srun -n1 -N1"
 # -N1 -n1         allocates a single core to each task
 
 # Define parallel arguments:
@@ -150,7 +150,7 @@ ls NENE*[AB].txt | $parallel "$srun bash ./goostats {1} stats-{1}"
 {: .bash}
 
 
-Now lets go ahead and run the job by using `sbatch` to submit `parallel.sh`. 
+Now lets go ahead and run the job by using `sbatch` to submit `parallel.sh`.
 
 ~~~
 sbatch parallel.sh
@@ -160,27 +160,27 @@ sbatch parallel.sh
 This will take a minute or so to run. If we watch the output of `sacct` we should see 15 subjobs being created.
 
 ~~~
-35590.batch       batch               scw1000          4  COMPLETED      0:0 
-35590.extern     extern               scw1000          4  COMPLETED      0:0 
-35590.0            bash               scw1000          1  COMPLETED      0:0 
-35590.1            bash               scw1000          1  COMPLETED      0:0 
-35590.2            bash               scw1000          1  COMPLETED      0:0 
-35590.3            bash               scw1000          1  COMPLETED      0:0 
-35590.4            bash               scw1000          1  COMPLETED      0:0 
-35590.5            bash               scw1000          1  COMPLETED      0:0 
-35590.6            bash               scw1000          1  COMPLETED      0:0 
-35590.7            bash               scw1000          1  COMPLETED      0:0 
-35590.8            bash               scw1000          1  COMPLETED      0:0 
-35590.9            bash               scw1000          1  COMPLETED      0:0 
-35590.10           bash               scw1000          1  COMPLETED      0:0 
-35590.11           bash               scw1000          1  COMPLETED      0:0 
-35590.12           bash               scw1000          1  COMPLETED      0:0 
-35590.13           bash               scw1000          1  COMPLETED      0:0 
-35590.14           bash               scw1000          1  COMPLETED      0:0 
+35590.batch       batch               scw1000          4  COMPLETED      0:0
+35590.extern     extern               scw1000          4  COMPLETED      0:0
+35590.0            bash               scw1000          1  COMPLETED      0:0
+35590.1            bash               scw1000          1  COMPLETED      0:0
+35590.2            bash               scw1000          1  COMPLETED      0:0
+35590.3            bash               scw1000          1  COMPLETED      0:0
+35590.4            bash               scw1000          1  COMPLETED      0:0
+35590.5            bash               scw1000          1  COMPLETED      0:0
+35590.6            bash               scw1000          1  COMPLETED      0:0
+35590.7            bash               scw1000          1  COMPLETED      0:0
+35590.8            bash               scw1000          1  COMPLETED      0:0
+35590.9            bash               scw1000          1  COMPLETED      0:0
+35590.10           bash               scw1000          1  COMPLETED      0:0
+35590.11           bash               scw1000          1  COMPLETED      0:0
+35590.12           bash               scw1000          1  COMPLETED      0:0
+35590.13           bash               scw1000          1  COMPLETED      0:0
+35590.14           bash               scw1000          1  COMPLETED      0:0
 ~~~
 {: .output}
 
-The file `parallel_joblog` will contain a list of when each job ran and how long it took. 
+The file `parallel_joblog` will contain a list of when each job ran and how long it took.
 
 ~~~
 Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  Command

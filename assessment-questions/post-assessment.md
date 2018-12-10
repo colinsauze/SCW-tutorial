@@ -12,7 +12,7 @@ Do you have definitive plans to run an analysis using a computer system offered 
     e) Yes, a public cloud offering (Amazon EC2, Microsoft Azure, Google)
     f) I have no idea
 
-## Declarative Knowledge: 
+## Declarative Knowledge:
 
 Name one difference between a cluster and cloud VM!
 
@@ -21,5 +21,5 @@ Name two commands that communicate between your computer and another CI!
 Name two computational resources that can be contentious when running an analysis.
 
 ## Skill:
-Transfer a file from external of your CI onto your CI 
-Identify one program that is running on the CI 
+Transfer a file from external of your CI onto your CI
+Identify one program that is running on the CI

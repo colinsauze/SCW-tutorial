@@ -1,9 +1,9 @@
-Introducing to HPC for users of the Super Computing Wales system. 
+Introducing to HPC for users of the Supercomputing Wales system.
 
 Maintainers:
  * Colin Sauze
 
-This lesson has been (heavily) adapted from the Data Carpentry Cloud Genomics lesson and in particular the Harvard University Faculty of Arts & Sciences Research Computing HPC version of it (https://github.com/fasrc/DataC-HPC-genomics). 
+This lesson has been (heavily) adapted from the Data Carpentry Cloud Genomics lesson and in particular the Harvard University Faculty of Arts & Sciences Research Computing HPC version of it (https://github.com/fasrc/DataC-HPC-genomics).
 
 Original contributors:
 * [Chris Fields](http://www.bioperl.org/wiki/User:Cjfields)

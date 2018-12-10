@@ -3,7 +3,7 @@ title: "HPC Best Practice"
 author: "Colin Sauze"
 questions:
  - "What are the best practices for using an HPC system?"
-objectives: 
+objectives:
  - "Understand HPC best practice"
 ---
 
@@ -21,7 +21,7 @@ objectives:
 ## Best Practices
 
 Again, working on a cluster is working in a big sandbox, with people of all ages and skills. So it is
-important to work carefully and be considerate. Please visit our list of Common Pitfalls and 
+important to work carefully and be considerate. Please visit our list of Common Pitfalls and
 Fair Use/Responsibilities pages so that you'll be a good member of the community...
 
 [Common Pitfalls](https://rc.fas.harvard.edu/resources/documentation/common-odyssey-pitfalls/)

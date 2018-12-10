@@ -3,7 +3,7 @@ layout: reference
 root: .
 ---
 
-# SFTP 
+# SFTP
 
 If you want to use SFTP from the command line instead of with Filezilla then these commands might be helpful.
 

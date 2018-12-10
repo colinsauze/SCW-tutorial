@@ -11,7 +11,7 @@ permalink: /guide/
  * get attendees to introduce themselves
  * etherpad link http://board.net/p/scwaber-2018-11-21
 
- 
+
 # HPC background
 
 What is a cluster
@@ -30,7 +30,7 @@ introduce SCW
 RSEs
 history with HPCW
 current state
-application process 
+application process
 
 
 # Logging in
@@ -45,7 +45,7 @@ application process
 
 * Setup account
 * Logging in
-* Run sinfo 
+* Run sinfo
 
 
 # Moving Data
@@ -63,7 +63,7 @@ Scratch dirs in /scratch/username
 # Running Jobs
 
 ## Interactive jobs
-`salloc -n 1 --ntasks-per-node=1 ` 
+`salloc -n 1 --ntasks-per-node=1 `
 `srun --pty -n 1 /bin/bash`
 `squeue`
 
@@ -92,7 +92,7 @@ run `sbatch --time 0-0:2 batchjob.sh`
 ### Listing jobs that have Running
 `sacct`
 
-## Exercises 
+## Exercises
 * Using sbatch
 
 ## Running multiple jobs with srun
@@ -202,7 +202,7 @@ crude way:
 
 `command3 &`
 
-what if command1/2/3 take different amounts of time to run? 
+what if command1/2/3 take different amounts of time to run?
 We've got CPUs allocated but we aren't using them. Want to keep usage near to 100%
 
 What if command4 needs to run after command1/2/3.
@@ -214,7 +214,7 @@ parallel can read input from a pipe and apply a command to each line of input
 
 `ls | parallel echo {1}`
 
-`ls | parallel echo` 
+`ls | parallel echo`
 
 alternate syntax for same thing
 
@@ -232,9 +232,9 @@ Use parallel on Nelle's pipeline from Unix Shell lesson.
 `cd data-shell/north-pacific-gyre/2012-07-03/`
 
 We used to process this with a for loop in series.
-Switch to parallel 
+Switch to parallel
 
-`ls NENE*[AB].txt | parallel goostats {1} stats-{1}` 
+`ls NENE*[AB].txt | parallel goostats {1} stats-{1}`
 
 
 
@@ -270,7 +270,7 @@ submit it:
 
 `sbatch parallel.sh`
 
-sacct will show 15 subjobs. 
+sacct will show 15 subjobs.
 
 parallel_joblog shows how long each took to run.
 
@@ -288,12 +288,12 @@ drop points randomly on a circle/quadrant
 
 draw a circle, take a quadrant
 drop m random points on a quadrant
-n is number inside the circle 
+n is number inside the circle
 
      4*m
 Pi = ---
       n
-      
+     
 see python implementation of this
 
 x^2 + y^2 < 1 means inside the circle
@@ -306,15 +306,15 @@ profilers tell us how long each line of code takes
 
 python line_profiler is one of these
 
-install with 
+install with
 
 `module load python/3.7.0`
 
 `pip3 install --user line_profiler`
 
 we have to tell the profiler which function to profile with @profile tag
-put this before def main(): 
-refactor so there's a main function 
+put this before def main():
+refactor so there's a main function
 
 try to find an empty head node to do this, ssl003 is a good bet
 
@@ -322,7 +322,7 @@ run profiler:
 
 `~/.local/bin/kernprof -l ./serial_numpi.py 50000000`
 
-output stored in 
+output stored in
 
 serial_numpi_profiled.py.lprof
 
@@ -356,7 +356,7 @@ generating random numbers takes about 60% of the time. this is our prime target 
 # Parallel estimation of Pi
 
 Showed previously random number generation was 60-70% of time.
-show profiler output again. 
+show profiler output again.
 
 `python3 -m line_profiler serial_numpi.py.lprof`
 
@@ -391,7 +391,7 @@ What is the overall speedup of a program when some of it is done in paralle?
            1
 S = ---------------
     (1 - p) + (p/s)
-    
+   
 p = portion of program sped up
 s = speedup achieved
 
@@ -401,14 +401,14 @@ occupied 70% of time
 speedup of 2 in that time
              1
 S = ----------------
-    (1 - 0.7) + (0.7/2) 
+    (1 - 0.7) + (0.7/2)
 
 S = 1.538
 
 
 ## Exercises
 
-* Compute the speedup with 4 parts 
+* Compute the speedup with 4 parts
 * Always go parallel right?
 
 ## More Amdhal's law
@@ -421,7 +421,7 @@ additional limits from I/O and memory bottlenecks
 in the example Lola splits data into partitions, see figure
 
 PyMP and OpenMP, parallel loops
-simpler than threads 
+simpler than threads
 can also use the multiprocessing library in python
 
 explain shared vs private variables, locking
@@ -459,9 +459,9 @@ repeat with more cores
 
 `sbatch -n 16 mpi_hostname.sh`
 
-order of output might be a bit random. Merging of the file done by synchronising on each line. 
+order of output might be a bit random. Merging of the file done by synchronising on each line.
 
-MPI libraries available for lots of languages including C/C++, Fortran and Python 
+MPI libraries available for lots of languages including C/C++, Fortran and Python
 
 Install mpi4py
 
@@ -475,7 +475,7 @@ create py_mpi_hostname.sh with example contents
 
 submit with `sbatch -n 16 py_mpi_hostname.sh`
 
-## Exercises 
+## Exercises
 
 * run date with mpirun
 * upgrade print_hostname.py to include timestamps
@@ -498,8 +498,8 @@ Every line of code running will be in parallel in a different MPI process, possi
 
 Rank 0 will often do something different to other ranks. Show hello world and pi example in notes.
 
-MPI's scatter function will scatter an array in equal parts across all instances. 
-The gather function will gather data from all instances and merge them back together. 
+MPI's scatter function will scatter an array in equal parts across all instances.
+The gather function will gather data from all instances and merge them back together.
 
 In example final computation of Pi done on rank 0 only.
 

@@ -12,7 +12,7 @@ Do you have a need to run analysis on a remote computer system?
     e) Yes, a public cloud offering (Amazon EC2, Microsoft Azure, Google)
     f) I have no idea
 
-## Declarative Knowledge: 
+## Declarative Knowledge:
 Can you explain to your colleague what a virtual machine is?
 
 ## Skill:
