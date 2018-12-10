@@ -4,14 +4,14 @@ author: "Colin Sauze"
 teaching: 20
 exercises: 15
 questions:
- - "How can do I login to SCW?"
+ - "How can do I log in to SCW?"
 objectives:
- - "Understand how to login to SCW"
+ - "Understand how to log in to SCW"
  - "Understand the difference between the login node and each cluster's head node."
 keypoints:
- - "ssh sunbird.swansea.ac.uk or hawklogin.cf.ac.uk to login to the system"
- - "sinfo shows partitions and how busy they are."
- - "slurmtop shows another view of how busy the system is."
+ - "`ssh sunbird.swansea.ac.uk` or `ssh hawklogin.cf.ac.uk` to log in to the system"
+ - "`sinfo` shows partitions and how busy they are."
+ - "`slurmtop` shows another view of how busy the system is."
 ---
 
 
@@ -20,24 +20,22 @@ keypoints:
 
 Your username is your institutional ID prefixed by 'a' for Aberystwyth users, 'b' for Bangor users, 'c' for Cardiff users and 's' for Swansea users. External collaborators will have a username beginning with a 'x'.
 
-Aberystwyth and Swansea users should login to the Swansea Sunbird system by typing:
+Aberystwyth and Swansea users should log in to the Swansea Sunbird system by typing:
 
 ~~~
 $ ssh username@sunbird.swansea.ac.uk
 ~~~
 {: .bash}
 
-Windows users should use PuTTY and enter sunbird.swansea.ac.uk in the hostname box.
-
-
-Bangor and Cariff Users should login to the Cardiff Hawk system by typing:
+Bangor and Cardiff Users should log in to the Cardiff Hawk system by typing:
 
 ~~~
 $ ssh username@hawklogin.cf.ac.uk
 ~~~
 {: .bash}
 
-Windows PuTTY users should enter hawklogin.cf.ac.uk in the hostname box.
+If you use Windows and haven't installed the Git bash shell, you can instead use PuTTY
+and enter either `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk` in the hostname box.
 
 
 ## What's available?
@@ -62,7 +60,7 @@ These figures may still be subject to some change and might have been sourced fr
 |Cardiff Dev|2|40|196GB||
 |Cardiff Data Lake|2|?|?|Will be installed later. Intended for Hadoop and Elastic Stack users.|
 
-Aberystwyth and Swansea users are expected to use the Swansea system and will need to make a case for why they would need to use the Cardiff system. Bangor users are expected to use Cardiff.
+Aberystwyth and Swansea users are expected to use the Swansea system and will need to make a case for why they would need to use the Cardiff system. Bangor and Cardiff users are expected to use Cardiff, and external users are expected to use the same system as the owner of the project of which they are a member.
 
 
 ### Slurm
@@ -100,9 +98,9 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 # Exercises
 
 > ## Logging into Supercomputing Wales
-> 1. In your web browser go to https://my.supercomputing.wales and login with your university username and password.
-> 2. Click on "Reset SCW Password" and choose a new password for logging into the HPC. Your username is displayed in the "Account summary" box on the main page. Its usually a/b/c/s. and your normal university login.
-> 3. Login to sunbird.swansea.ac.uk or hawklogin.cf.ac.uk using your SSH client.
+> 1. In your web browser go to [https://my.supercomputing.wales](https://my.supercomputing.wales) and log in with your university username and password.
+> 2. Click on "Reset SCW Password" and choose a new password for logging into the HPC. Your username is displayed in the "Account summary" box on the main page. Its usually a/b/c/s. and your normal university login details.
+> 3. Log in to sunbird.swansea.ac.uk or hawklogin.cf.ac.uk using your SSH client.
 > 4. Run the `sinfo` command to see how busy things are.
 > 5. Try `sinfo --long`, what extra information does this give?
 {: .challenge}
