@@ -2,6 +2,7 @@ Introducing to HPC for users of the Supercomputing Wales system.
 
 Maintainers:
  * Colin Sauze
+ * Ed Bennett
 
 This lesson has been (heavily) adapted from the Data Carpentry Cloud Genomics lesson and in particular the Harvard University Faculty of Arts & Sciences Research Computing HPC version of it (https://github.com/fasrc/DataC-HPC-genomics).
 
