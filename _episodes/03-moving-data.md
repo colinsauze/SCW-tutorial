@@ -3,15 +3,15 @@ title: "Filesystems and Storage"
 author: "Colin Sauze"
 teaching: 15
 exercises: 30
-questions: 
+questions:
  - "Where can I store my data?"
  - "What is the difference between scratch and home filestore?"
-objectives: 
+objectives:
  - "Understand the difference between home and scratch directories"
  - "Understand how to copy files between your computer and your SCW home/scratch directories"
 keypoints:
  - "Scratch and home are per site."
- - "Scratch is faster and has no quotas, its not backed up. home is slower, smaller but backed up"
+ - "Scratch is faster and has no quotas, but short-term. home is slower and has quotas, but is long-term."
 ---
 
 
