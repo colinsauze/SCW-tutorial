@@ -170,7 +170,14 @@ nano batchjob.sh
 ~~~
 {: .bash}
 
-This is actually a bash script file containing all the commands that will be run. Lines beginning with a `#` are comments which bash will ignore. However lines that begin `#SBATCH` are instructions for the `sbatch` program. The first of these (`#SBATCH --job-name=hostname`) tells sbatch the name of the job, in this case we will call the job hostname. The `--output` line tells sbatch where output from the program should be sent, the `%J` in its name means the job number. The same applies for the `--error` line, except here it is for error messages that the program might generate, in most cases this file will be blank. The `--time` line limits how long the job can run for, this is specified in days, hours and minutes. The `--mem-per-cpu` tells Slurm how much memory to allow the job to use on each CPU it runs on, if the job exceeds this limit Slurm will automatically stop it. You can set this to zero for no limits. However by putting in a sensible number you can help allow other jobs to run on the same node. The final line specifies the actual commands which will be executed, in this case its the `hostname` command which will tell us the name of the compute node which ran our job.
+This is actually a bash script file containing all the commands that will be run. Lines beginning with a `#` are comments which bash will ignore. However lines that begin `#SBATCH` are instructions for the `sbatch` program. The first of these (`#SBATCH --job-name=hostname`) tells sbatch the name of the job, in this case we will call the job hostname. The `--output` line tells sbatch where output from the program should be sent, the `%J` in its name means the job number. The same applies for the `--error` line, except here it is for error messages that the program might generate, in most cases this file will be blank. The `--time` line limits how long the job can run for, this is specified in days, hours and minutes. The `--mem-per-cpu` tells Slurm how much memory to allow the job to use on each CPU it runs on, if the job exceeds this limit Slurm will automatically stop it. You can set this to zero for no limits. However by putting in a sensible number you can help allow other jobs to run on the same node. `--account` and `--reservation` tell Slurm to count usage against the project created for training workshops, and to use the nodes that have been reserved for today's training. (The value after `--reservation` changes for each workshop; your instructor will give you a value to use.) The final line specifies the actual commands which will be executed, in this case its the `hostname` command which will tell us the name of the compute node which ran our job.
+
+> ## Running on your own
+>
+> If you are following this guide outside of a training workshop, or want to adjust the script to use in your own research,
+> you will need to remove the `--reservation` line, since there won't be a reservation in place, and change `--account` to
+> the project code of an approved project that you are a member of.
+{: .callout}
 
 Lets go ahead and submit this job with the `sbatch` command.
 
