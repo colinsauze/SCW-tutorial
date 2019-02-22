@@ -38,9 +38,11 @@ If you want to experiment with some code and test it you should run it this way.
 To get an interactive session, you first need to issue a `salloc` command to reserve some resources.
 
 ~~~
-salloc -n 1
+salloc --nodes=1 --partition=scw1389 --reservation=scw1389_13
 ~~~
 {: .bash}
+
+(You may need to replace `scw1389_13` with the reservation ID given by your instructor.)
 
 The salloc command will respond now with a job ID number.
 
@@ -94,7 +96,7 @@ exit
 At this point we still hold an allocation for a node and could run another job if we wish. We can confirm this by examining the queue of our jobs with the `squeue` command.
 
 ~~~
-squeue
+squeue --user=s.jane.doe
 ~~~
 {: .bash}
 
@@ -122,7 +124,7 @@ salloc: Relinquishing job allocation 21712
 At this point our job is complete and we no longer hold any allocations. We can confirm this again with the `squeue` command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue
+[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
 ~~~
 {: .bash}
 
@@ -197,7 +199,7 @@ Submitted batch job 3739464
 Our job should only take a couple of seconds to run, but if we are fast we might see it in the `squeue` list.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue
+[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
 ~~~
 {: .bash}
 
@@ -462,7 +464,7 @@ Job Arrays are another method for running multiple copies of the same job. The `
 The above command will submit **three** copies of the batchjob.sh command.
 
 ~~~
-[s.jane.doe@sl1 ~]$ squeue
+[s.jane.doe@sl1 ~]$ squeue --user=s.jane.doe
              JOBID PARTITION     NAME     USER   ST       TIME  NODES NODELIST(REASON)
          3739590_0   compute hostname s.jane.doe  R       0:01      1 scs0018
          3739590_1   compute hostname s.jane.doe  R       0:01      1 scs0018
