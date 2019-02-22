@@ -245,7 +245,7 @@ only the last line that calls your code, and the first few lines to control the 
 Let's go ahead and run the job by using `sbatch` to submit `parallel_multinode.sh`.
 
 ~~~
-sbatch parallel.sh
+sbatch parallel_multinode.sh
 ~~~
 {: .bash}
 
