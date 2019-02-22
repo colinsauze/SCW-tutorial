@@ -31,6 +31,12 @@ A crude way to achieve this is to have our job submission script just run multip
 #SBATCH --error=test.err.%J
 #SBATCH --time=0-00:01
 #SBATCH --ntasks=3
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 command1 &
@@ -170,6 +176,12 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 #SBATCH --exclusive                    # request that we get exclusive use of this node
 #SBATCH --output output.%J                   # Job output
 #SBATCH --time 00:01:00                    # Max wall time for entire job
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 # Ensure that parallel is available to us
@@ -201,6 +213,12 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 #SBATCH --ntasks 80               # Number of processors we will use - 80 will fill two nodes
 #SBATCH --output output.%J              # Job output
 #SBATCH --time 00:01:00               # Max wall time for entire job
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 # Ensure that parallel is available to us

@@ -37,6 +37,12 @@ $ cat call_hostname.sh
 #SBATCH --job-name=mpi_hostname
 #SBATCH --output=mpi_hostname.out.%J.%N
 #SBATCH --error=mpi_hostname.err.%J.%N
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 mpirun hostname
@@ -112,6 +118,12 @@ Now we can run the program by putting the following into py_mpi_hostname.sh
 #SBATCH --job-name=py_mpi_hostname
 #SBATCH --output=py_mpi_hostname.out.%J.%N
 #SBATCH --error=py_mpi_hostname.err.%J.%N
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 module load mpi
@@ -158,9 +170,12 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 > > ## Solution
 > > ~~~
 > > #!/bin/sh
-> > ###                                                                                                                                                                                      > > #SBATCH --job-name=mpi_date
+> > ###
+> > #SBATCH --job-name=mpi_date
 > > #SBATCH --output=mpi_date.out.%J.%N
 > > #SBATCH --error=mpi_date.err.%J.%N
+> > #SBATCH --account=scw1389
+> > #SBATCH --reservation=scw1389_13
 > > ###
 > > module load mpi
 > > mpirun date +%M:%S.%N
@@ -283,12 +298,18 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
 #!/bin/bash
 
 ###                                                                                                                                                                                       
-#job name
+# job name
 #SBATCH --job-name=mpi_numpi
-#job stdout file
+# job stdout file
 #SBATCH --output=mpi_numpi.out.%J.%N
-#job stderr file
+# job stderr file
 #SBATCH --error=mpi_numpi.err.%J.%N
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 module load python/3.5.1

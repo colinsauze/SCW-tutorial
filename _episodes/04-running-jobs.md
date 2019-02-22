@@ -146,17 +146,23 @@ nano batchjob.sh
 ~~~
 #!/bin/bash --login
 ###
-#job name
+# job name
 #SBATCH --job-name=hostname
-#job stdout file
+# job stdout file
 #SBATCH --output=hostname.out.%J
-#job stderr file
+# job stderr file
 #SBATCH --error=hostname.err.%J
-#maximum job time in D-HH:MM
+# maximum job time in D-HH:MM
 #SBATCH --time=0-00:01
-#maximum memory of 10 megabytes
+# maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
 #SBATCH --ntasks=1
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 /bin/hostname
@@ -234,18 +240,24 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 ~~~
 #!/bin/bash --login
 ###
-#job name
+# job name
 #SBATCH --job-name=hostname
-#job stdout file
+# job stdout file
 #SBATCH --output=hostname.out.%J
-#job stderr file
+# job stderr file
 #SBATCH --error=hostname.err.%J
-#maximum job time in D-HH:MM
+# maximum job time in D-HH:MM
 #SBATCH --time=0-00:01
-#maximum memory of 10 megabytes
+# maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
 #SBATCH --ntasks=1
 #SBATCH --nodes=1
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 /bin/sleep 70
@@ -397,18 +409,24 @@ This will allow multiple copies of the command to run. In the example below two 
 ~~~
 #!/bin/bash --login
 ###
-#job name
+# job name
 #SBATCH --job-name=hostname
-#job stdout file
+# job stdout file
 #SBATCH --output=hostname.out.%J
-#job stderr file
+# job stderr file
 #SBATCH --error=hostname.err.%J
-#maximum job time in D-HH:MM
+# maximum job time in D-HH:MM
 #SBATCH --time=0-00:01
-#maximum memory of 10 megabytes
+# maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
 #SBATCH --ntasks=2
 #SBATCH --nodes=2
+# specify our current project
+# change this for your own work
+#SBATCH --account=scw1389
+# specify the reservation we have for the training workshop
+# remove this for your own work
+#SBATCH --reservation=scw1389_13
 ###
 
 srun /bin/hostname
