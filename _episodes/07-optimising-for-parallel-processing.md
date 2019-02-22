@@ -168,8 +168,8 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 ###
 #SBATCH --nodes 1                      # request everything runs on the same node
 #SBATCH --exclusive                    # request that we get exclusive use of this node
-#SBATCH -o output.%J                   # Job output
-#SBATCH -t 00:01:00                    # Max wall time for entire job
+#SBATCH --output output.%J                   # Job output
+#SBATCH --time 00:01:00                    # Max wall time for entire job
 ###
 
 # Ensure that parallel is available to us
@@ -199,20 +199,20 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 #!/bin/bash --login
 ###
 #SBATCH --ntasks 80               # Number of processors we will use - 80 will fill two nodes
-#SBATCH -o output.%J              # Job output
-#SBATCH -t 00:01:00               # Max wall time for entire job
+#SBATCH --output output.%J              # Job output
+#SBATCH --time 00:01:00               # Max wall time for entire job
 ###
 
 # Ensure that parallel is available to us
 module load parallel
 
 # Define srun arguments:
-srun="srun -n1 -N1"
-# -N1 -n1         allocates a single core to each task
+srun="srun --nodes 1 --ntasks 1"
+# --nodes 1 --ntasks 1         allocates a single core to each task
 
 # Define parallel arguments:
-parallel="parallel -j $SLURM_NTASKS --joblog parallel_joblog"
-# -j $SLURM_NTASKS  is the number of concurrent tasks parallel runs, so number of CPUs allocated
+parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
+# --max-procs $SLURM_NTASKS  is the number of concurrent tasks parallel runs, so number of CPUs allocated
 # --joblog name     parallel's log file of tasks it has run
 
 # Run the tasks:

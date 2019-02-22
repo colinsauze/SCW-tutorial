@@ -528,14 +528,14 @@ The partition name is listed in the first column. The `*` next to the work parti
 We can specify which partition a job runs in with the `-p` or `--partition` arguments to `sbatch`. So for example the following command will run our batch job on the work partition.
 
 ~~~
-sbatch -p work batchjob.sh
+sbatch --partition work batchjob.sh
 ~~~
 {: .bash}
 
 We could also add the following line to the batch submission script.
 
 ~~~
-#SBATCH -p work
+#SBATCH --partition work
 ~~~
 {:  .bash}
 
