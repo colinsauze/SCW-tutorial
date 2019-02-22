@@ -509,12 +509,12 @@ Never use a piece of software for the first time without looking to see what com
 ### Time
 This is determined by test runs that you do on your code during an interactive session.
 Or, if you submit a batch job, over-ask first, check the amount of time actually needed,
-then reduce time on later runs. **SCW has a limit of three days maximum to run a job**
+then reduce time on later runs. **The Supercomputing Wales hubs have a limit of three days maximum to run a job**
 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes / job
 
 ### Memory:
-We recommend that you check the software docs for memory requirements. But often times these are not stated, so we can take another approach. On HPCW, each job is allowed, on average, 3 GB RAM/core allocated. So, try 3 GB and do a trial run via `srun` or `sbatch`. If you're job was killed, look at your log files or `sacct`. If it shows a memory error, you went over. Ask for more and try again.
+We recommend that you check the software docs for memory requirements. But often times these are not stated, so we can take another approach. On the Supercomputing Wales hubs, each job is allowed, on average, 9 GB RAM/core allocated. So, try 3 GB and do a trial run via `srun` or `sbatch`. If you're job was killed, look at your log files or `sacct`. If it shows a memory error, you went over. Ask for more and try again.
 
 Once the job has finished, ask the scheduler how much RAM was used by using the `sacct` command to get post-run job info:
 
@@ -531,11 +531,11 @@ You can tell Slurm how many cores you expect your software to use with the `-n` 
 This is determined by your software, how anxious you are to get the work done, and how well your code scales. **NOTE! Throwing more cores at a job does not make it run faster!** This is a common mistake and will waste compute time and prevent other users from running jobs. Ensure your software can use multiple cores: Inspect the parameters for your software and look for options such as 'threads', 'processes', 'cpus'; this will often indicate that it has been parallelized. Then run test jobs to see how well it performs with multiple cores, inching slowing from 1 to 2, 4, 8, etc, assessing the decrease in time for the job run as you increase cores. Programs often do not scale well -- it's important to understand this so you can choose the appropriate number.
 
 ### Number of Nodes
-For most software, this choice is simple: 1. There are *very* few software packages capable of running across multiple nodes. If they are capable, they will probably mention the use of technology called 'MPI' or 'openMPI'. Please talk to your local SCW staff about how to run this. If you wish to set this use the `--nodes` or `-N` options to sbatch.
+For most software, this choice is simple: 1. There are *very* few software packages capable of running across multiple nodes. If they are capable, they will probably mention the use of technology called 'MPI' or 'openMPI'. Please talk to your local Supercomputing Wales staff about how to run this. If you wish to set this use the `--nodes` or `-N` options to sbatch.
 
 ### Partitions (Queues)
 
-Partitions, or queues, are a grouping of computers to run a certain profile of jobs. This could be maximum run time, # of cores used, amount of max RAM, etc. On HPCW each unique configuration of systems has its own partition. Earlier on we used the `sinfo` command to list the state of the cluster, one of the parameters this showed was the name of the parititons.
+Partitions, or queues, are a grouping of computers to run a certain profile of jobs. This could be maximum run time, # of cores used, amount of max RAM, etc. On the Supercomputing Wales hubs each unique configuration of systems has its own partition. Earlier on we used the `sinfo` command to list the state of the cluster, one of the parameters this showed was the name of the partitions.
 
 Here is the output of `sinfo` on Sunbird in Swansea.
 

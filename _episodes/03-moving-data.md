@@ -8,7 +8,7 @@ questions:
  - "What is the difference between scratch and home filestore?"
 objectives:
  - "Understand the difference between home and scratch directories"
- - "Understand how to copy files between your computer and your SCW home/scratch directories"
+ - "Understand how to copy files between your computer and your Supercomputing Wales home/scratch directories"
 keypoints:
  - "Scratch and home are per site."
  - "Scratch is faster and has no quotas, but short-term. home is slower and has quotas, but is long-term."
@@ -81,9 +81,9 @@ Filesystem                                Size  Used Avail Use% Mounted on
 ~~~
 {: .output}
 
-## Copying data from your PC to SCW
+## Copying data from your PC to the Supercomputing Wales hubs
 
-You can copy files to/from your SCW home and scratch drives using the secure copy protocol (SCP) or secure file transfer protocol (SFTP) and connecting to Sunbird or Hawk.
+You can copy files to/from your Supercomputing Wales home and scratch drives using the secure copy protocol (SCP) or secure file transfer protocol (SFTP) and connecting to Sunbird or Hawk.
 
 ### Copying data using the command line
 
@@ -155,5 +155,5 @@ You can change directory on the remote host by typing a path into the "Remote si
 > 1. Login to a head node.
 > 2. Create a file called hello.txt by using the nano text editor (or the editor of your choice) and typing `nano hello.txt`. Enter some text into the file and press Ctrl+X to save it.
 > 3. Use either Filezilla or SCP/SFTP to copy the file to your computer.
-> 4. Create a file on your computer using a text editor. Copy that file to your SCW home directory using Filezilla or SCP/SFTP and examine its conents with nano on the head node.
+> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with nano on the head node.
 {: .challenge}

@@ -18,7 +18,7 @@ keypoints:
 
 ## Running a job on multiple cores
 
-By default most programs will only run one job per node, but all SCW/HPCW nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance.
+By default most programs will only run one job per node, but all Supercomputing Wales nodes have multiple CPU cores and are capable of running multiple processes at once without (much) loss of performance.
 
 A crude way to achieve this is to have our job submission script just run multiple processes and background each one with the `&` operator.
 

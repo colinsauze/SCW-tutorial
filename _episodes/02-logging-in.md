@@ -4,9 +4,9 @@ author: "Colin Sauze"
 teaching: 20
 exercises: 15
 questions:
- - "How can do I log in to SCW?"
+ - "How can do I log in to Supercomputing Wales?"
 objectives:
- - "Understand how to log in to SCW"
+ - "Understand how to log in to the Supercomputing Wales hubs"
  - "Understand the difference between the login node and each cluster's head node."
 keypoints:
  - "`ssh sunbird.swansea.ac.uk` or `ssh hawklogin.cf.ac.uk` to log in to the system"

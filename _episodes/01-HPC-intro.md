@@ -8,7 +8,7 @@ questions:
 keypoints:
  - "A cluster is a group of computers connected together to act as one."
  - "Clusters are formed of nodes, each usually has several processors and 10s or hundreds of gigabytes of RAM."
- - "HPCW/SCW have clusters for researchers at Welsh universities to use"
+ - "Supercomputing Wales has clusters for researchers at Welsh universities to use"
 objectives:
  - "Understand what a cluster is"
  - "Understand the background to the HPC Wales and Supercomputing Wales projects"
@@ -54,7 +54,7 @@ Each individual computer in a cluster is commonly referred to as a "node". Insid
 
 HPC Wales ran from 2010 to 2015 and provided clusters in Aberystwyth, Bangor, Cardiff, Glamorgan and Swansea. The final systems are being shutdown in late 2018, all users should now use Supercomputing Wales.
 
-### SCW
+### Supercomputing Wales
 
 Supercomputing Wales (SCW) is a new project to replace HPC Wales involving Aberystwyth, Bangor, Cardiff and Swansea universities. It started in 2015 and runs until 2020. It includes new systems in Cardiff (known as Hawk) and Swansea (known as Sunbird).
 
@@ -70,18 +70,18 @@ Each university is employing research software engineers who will work with rese
 
 ### How to get access?
 
-Apply for an account via the "My Supercomputing Wales" webpage at [My SCW](https://my.supercomputing.wales). You can sign into this webpage using your normal university username and password. You will then be able to set or change your Supercomputing Wales password from this page.
+Apply for an account via the ["My Supercomputing Wales" webpage](https://my.supercomputing.wales). You can sign into this webpage using your normal university username and password. You will then be able to set or change your Supercomputing Wales password from this page.
 
-To use the system you will have to apply for a project as well as a user account. Everyone on this course should have been added to a training project, this project is time limited. If you would like to use SCW for your research then you will have to apply for your own project or join an existing one.
+To use the system you will have to apply for a project as well as a user account. Everyone on this course should have been added to a training project, this project is time limited. If you would like to use Supercomputing Wales for your research then you will have to apply for your own project or join an existing one.
 
 #### Project Application Process
 
-The project form is used to assess whether SCW has enough resources for what you want. PhD students and RAs need to get your supervisor/PI to approve their projects. Projects are assessed by SCW staff who are looking for two key targets:
+The project form is used to assess whether Supercomputing Wales has enough resources for what you want. PhD students and RAs need to get your supervisor/PI to approve their projects. Projects are assessed by Supercomputing Wales staff who are looking for two key targets:
 
   * Grant income that can be attributed to Supercomputing Wales.
   * Science Outputs (e.g. journal papers)
 
-At this stage you do NOT need to pay any money to SCW, simply attribute that the grant funding required access to the system. Funding which attributes other projects funded by the Welsh European Funding Office (WEFO) cannot be counted towards SCW.
+At this stage you do NOT need to pay any money to Supercomputing Wales, simply attribute that the grant funding required access to the system. Funding which attributes other projects funded by the Welsh European Funding Office (WEFO) cannot be counted towards Supercomputing Wales.
 
-If you are writing a grant application and intend to use SCW please mention it in the grant and let us know. There are project targets to bring in approx £8 million of funding, Aberystwyth's target is around £800k. This should be easily achievable, but bringing in far more will help us get follow on funding for SCW.
+If you are writing a grant application and intend to use Supercomputing Wales please mention it in the grant and let us know. There are project targets to bring in approx £8 million of funding, Aberystwyth's target is around £800k. This should be easily achievable, but bringing in far more will help us get follow on funding for Supercomputing Wales.
 
