@@ -1,6 +1,6 @@
 ---
 title: "Optimising for Parallel Processing"
-author: "Colin Sauze"
+author: "Colin Sauze, Ed Bennett"
 teaching: 15
 exercises: 0
 questions:
@@ -137,19 +137,70 @@ ls NENE*[AB].txt | parallel goostats {1} stats-{1}
 
 We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we run the time command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
 
+### Using a list stored in a file
 
+Frequently it is more convenient to specify a list of files, or other arguments, to process by listing them in a file rather than typing them out at the command line. For example, in Nelle's workflow, she may want to ensure that the analysis always tries exactly the same file list, even if one is missing, so she will be alerted to its absence.
+
+To create the file list, recall that we can use `>` to redirect output.
+
+~~~
+ls NENE*[AB].txt > files_to_process.txt
+~~~
+{: .bash}
+
+Now, to tell parallel to use this file as a list of arguments, we can use `::::` instead of `:::`.
+
+~~~
+parallel goostats {1} stats-{1} :::: files_to_process.txt
+~~~
+{: .bash}
 
 ### Running Parallel under Slurm
 
-First lets create a job submission script and call it `parallel.sh`.
+To process using Parallel on a single node, we can use a job submission script very similar to the ones we have been using so far.
+Since each compute node on Sunbird and Hawk has 40 cores, Parallel will automatically run 40 different parameters at once. We
+need to be careful to request the whole node so that we don't use cores that aren't allocated to us.
+
+First lets create a job submission script and call it `parallel_1node.sh`.
 
 ~~~
 #!/bin/bash --login
 ###
-#SBATCH --ntasks 4                     #Number of processors we will use
-#SBATCH --nodes 1                      #request everything runs on the same node
-#SBATCH -o output.%J              #Job output
-#SBATCH -t 00:00:05               #Max wall time for entire job
+#SBATCH --nodes 1                      # request everything runs on the same node
+#SBATCH --exclusive                    # request that we get exclusive use of this node
+#SBATCH -o output.%J                   # Job output
+#SBATCH -t 00:01:00                    # Max wall time for entire job
+###
+
+# Ensure that parallel is available to us
+module load parallel
+
+# Run the tasks:
+parallel bash ./goostats {1} stats-{1} :::: files_to_process.txt
+~~~
+{: .bash}
+
+We can then run this by using `sbatch` to submit `parallel_1node.sh`.
+
+If we need to process a very large number of files or parameters, we might want to request
+to run on more than one node. One way of doing this is splitting the parameter set into
+subsets, and running multiple jobs. If the machine is very busy, this has the advantage that
+Slurm can fit a single-node job in whenever one node is free, rather than having to wait for
+a large number of nodes to become free at the same time. However, the downside is that you
+end up with many different submission scripts and parameter sets, so it gets easier to miss one.
+
+To submit a single submission script that runs on many nodes using Parallel, we need to tell Parallel
+how to run programs on other nodes than the current one. Slurm provides a built-in program to do this
+called `srun`, which we used earlier to run on our interactive allocation. We also need to tell Parallel
+to run enough programs to fill all of the nodes that we have allocated. Let's create a file
+`parallel_multinode.sh`.
+
+~~~
+#!/bin/bash --login
+###
+#SBATCH --ntasks 80               # Number of processors we will use - 80 will fill two nodes
+#SBATCH -o output.%J              # Job output
+#SBATCH -t 00:01:00               # Max wall time for entire job
 ###
 
 # Ensure that parallel is available to us
@@ -165,12 +216,15 @@ parallel="parallel -j $SLURM_NTASKS --joblog parallel_joblog"
 # --joblog name     parallel's log file of tasks it has run
 
 # Run the tasks:
-ls NENE*[AB].txt | $parallel "$srun bash ./goostats {1} stats-{1}"
+$parallel "$srun bash ./goostats {1} stats-{1}" :::: files_to_process.txt
 ~~~
 {: .bash}
 
+This script looks a bit more complicated than the ones we've used so far; the comments explain what each step does.
+To use this script for your own workloads, you can ignore the middle section that sets up things for Parallel;
+only the last line that calls your code, and the first few lines to control the job parameters, need to be adjusted.
 
-Now lets go ahead and run the job by using `sbatch` to submit `parallel.sh`.
+Let's go ahead and run the job by using `sbatch` to submit `parallel_multinode.sh`.
 
 ~~~
 sbatch parallel.sh
@@ -251,5 +305,8 @@ hello world 1 a
 hello world 2 b
 hello world 3 c
 ~~~
+
+These options also work when using `::::` to take the list from a file instead.
+
 {: .output}
 
