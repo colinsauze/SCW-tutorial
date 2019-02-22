@@ -525,17 +525,17 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 
 The partition name is listed in the first column. The `*` next to the work partition denotes that it is the default. We can see that in total it contains 162 nodes. Each of these has 36GB of RAM and 12 Westmere cores. The `Large` partition only contains four nodes but each of these have 128GB of RAM and the older Nehalem processors. Finally the `vlarge` partition only contains one node, but this has 512GB of RAM and a Nehalem processor.
 
-We can specify which partition a job runs in with the `-p` or `--partition` arguments to `sbatch`. So for example the following command will run our batch job on the work partition.
+We can specify which partition a job runs in with the `-p` or `--partition` arguments to `sbatch`. So for example the following command will run our batch job on the compute partition.
 
 ~~~
-sbatch --partition work batchjob.sh
+sbatch --partition compute batchjob.sh
 ~~~
 {: .bash}
 
 We could also add the following line to the batch submission script.
 
 ~~~
-#SBATCH --partition work
+#SBATCH --partition compute
 ~~~
 {:  .bash}
 
