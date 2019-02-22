@@ -57,7 +57,10 @@ GNU Parallel can be loaded a module called "parallel". Its syntax is a bit compl
 
 For this example we'll just run on a quick test on the head node. First we have to load the module for parallel.
 
-`module load parallel`
+~~~
+module load parallel
+~~~
+{: .bash}
 
 > ## Citing Software
 > 
@@ -66,17 +69,26 @@ For this example we'll just run on a quick test on the head node. First we have 
 
 The command below will run ls to list all the files in the current directory and it will send the list of files to parallel. Parallel will in turn run the echo command on each input it was given. The `{1}` means to use the first argument (and in this case its the only one) as the parameter to the echo command.
 
-`ls | parallel echo {1}`
+~~~
+ls | parallel echo {1}
+~~~
+{: .bash}
 
 As a short hand we could have also run the command
 
-`ls | parallel echo`
+~~~
+ls | parallel echo
+~~~
+{: .bash}
 
 and it would produce the same output.
 
 An alternate syntax for the same command is:
 
-`parallel echo {1} ::: $(ls)`
+~~~
+parallel echo {1} ::: $(ls)
+~~~
+{: .bash}
 
 Here we specify what command to run first and the put the data to process second, after the `:::`.
 
@@ -89,27 +101,39 @@ As an example we're going to use the example data from the Software Carpentry [U
 
 First we need to download Nelle's data from the Software Carpentry website. This can be downloaded with the wget command, the files then need to be extracted from the zip archive with the unzip command.
 
-`wget http://swcarpentry.github.io/shell-novice/data/data-shell.zip`
-`unzip data-shell.zip`
+~~~
+wget http://swcarpentry.github.io/shell-novice/data/data-shell.zip
+unzip data-shell.zip
+~~~
+{: .bash}
 
 The data we'll be using is now extracted into the directory data-shell/north-pacific-gyre/2012-07-03
 
-`cd data-shell/north-pacific-gyre/2012-07-03/`
+~~~
+cd data-shell/north-pacific-gyre/2012-07-03/
+~~~
+{: .bash}
 
 Nelle needs to run a program called `goostats` on each file to process it. During the Unix Shell lesson this data was processed in series by the following set of commands:
 
-`# Calculate stats for data files.`
-`for datafile in $(ls NENE*[AB].txt)`
-`do`
-`    echo $datafile`
-`    bash goostats $datafile stats-$datafile`
-`done`
+~~~
+# Calculate stats for data files.
+for datafile in $(ls NENE*[AB].txt)
+do
+    echo $datafile
+    bash goostats $datafile stats-$datafile
+done
+~~~
+{: .bash}
 
 The `ls NENE*[AB].txt` command lists all the files which start with "NENE" and end either A.txt or B.txt. The for loop will work through the list of files produced by ls one by one and runs goostats on each one.
 
 Lets convert this process to run in parallel by using GNU Parallel instead. By running
 
-`ls NENE*[AB].txt | parallel goostats {1} stats-{1}`
+~~~
+ls NENE*[AB].txt | parallel goostats {1} stats-{1}
+~~~
+{: .bash}
 
 We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we run the time command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
 
