@@ -93,7 +93,7 @@ exit
 ~~~
 {: .output}
 
-At this point we still hold an allocation for a node and could run another job if we wish. We can confirm this by examining the queue of our jobs with the `squeue` command.
+At this point we still hold an allocation for a node and could run another job if we wish. We can confirm this by examining the queue of our jobs with the `squeue` command. By default this will show all users' jobs, which is a bit overwhelming, so we can use `--user=` and our username to filter to our own jobs only.
 
 ~~~
 squeue --user=s.jane.doe
