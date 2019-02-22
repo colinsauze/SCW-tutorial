@@ -152,9 +152,7 @@ First lets create a job submission script and call it `parallel.sh`.
 #SBATCH -t 00:00:05               #Max wall time for entire job
 ###
 
-#parallel is only available as a legacy HPC Wales module
-#running module load hpcw makes all the legacy modules available to us
-module load hpcw
+# Ensure that parallel is available to us
 module load parallel
 
 # Define srun arguments:
