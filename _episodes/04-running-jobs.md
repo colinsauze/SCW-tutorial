@@ -38,7 +38,7 @@ If you want to experiment with some code and test it you should run it this way.
 To get an interactive session, you first need to issue a `salloc` command to reserve some resources.
 
 ~~~
-salloc --nodes=1 --partition=scw1389 --reservation=scw1389_13
+salloc --nodes=1 --account=scw1389 --reservation=scw1389_13
 ~~~
 {: .bash}
 
