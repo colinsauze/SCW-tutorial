@@ -234,7 +234,7 @@ Use parallel on Nelle's pipeline from Unix Shell lesson.
 We used to process this with a for loop in series.
 Switch to parallel
 
-`ls NENE*[AB].txt | parallel goostats {1} stats-{1}`
+`ls NENE*[AB].txt | parallel bash goostats {1} stats-{1}`
 
 
 
@@ -263,7 +263,7 @@ parallel.sh:
 
 `parallel="parallel -j $SLURM_NTASKS --joblog parallel_joblog"`
 
-`ls NENE*[AB].txt | $parallel "$srun bash ./goostats {1} stats-{1}"`
+`ls NENE*[AB].txt | $parallel "$srun bash goostats {1} stats-{1}"`
 
 
 submit it:
