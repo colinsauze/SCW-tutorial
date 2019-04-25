@@ -137,7 +137,7 @@ The `ls NENE*[AB].txt` command lists all the files which start with "NENE" and e
 Lets convert this process to run in parallel by using GNU Parallel instead. By running
 
 ~~~
-ls NENE*[AB].txt | parallel goostats {1} stats-{1}
+ls NENE*[AB].txt | parallel bash goostats {1} stats-{1}
 ~~~
 {: .bash}
 
@@ -157,7 +157,7 @@ ls NENE*[AB].txt > files_to_process.txt
 Now, to tell parallel to use this file as a list of arguments, we can use `::::` instead of `:::`.
 
 ~~~
-parallel goostats {1} stats-{1} :::: files_to_process.txt
+parallel bash goostats {1} stats-{1} :::: files_to_process.txt
 ~~~
 {: .bash}
 
@@ -188,7 +188,7 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 module load parallel
 
 # Run the tasks:
-parallel bash ./goostats {1} stats-{1} :::: files_to_process.txt
+parallel bash goostats {1} stats-{1} :::: files_to_process.txt
 ~~~
 {: .bash}
 
@@ -234,7 +234,7 @@ parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
 # --joblog name     parallel's log file of tasks it has run
 
 # Run the tasks:
-$parallel "$srun bash ./goostats {1} stats-{1}" :::: files_to_process.txt
+$parallel "$srun bash goostats {1} stats-{1}" :::: files_to_process.txt
 ~~~
 {: .bash}
 
@@ -276,21 +276,21 @@ The file `parallel_joblog` will contain a list of when each job ran and how long
 
 ~~~
 Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  Command
-1       :       1542803199.833       2.205      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01729A.txt stats-NENE01729A.txt
-2       :       1542803199.835       2.250      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01729B.txt stats-NENE01729B.txt
-3       :       1542803199.837       2.251      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01736A.txt stats-NENE01736A.txt
-4       :       1542803199.839       2.282      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01751A.txt stats-NENE01751A.txt
-5       :       1542803202.040       2.213      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01751B.txt stats-NENE01751B.txt
-6       :       1542803202.088       2.207      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01812A.txt stats-NENE01812A.txt
-7       :       1542803202.091       2.207      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01843A.txt stats-NENE01843A.txt
-8       :       1542803202.124       2.208      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01843B.txt stats-NENE01843B.txt
-9       :       1542803204.257       2.210      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01978A.txt stats-NENE01978A.txt
-10      :       1542803204.297       2.173      0       0       0       0       srun -n1 -N1 bash ./goostats NENE01978B.txt stats-NENE01978B.txt
-11      :       1542803204.300       2.223      0       0       0       0       srun -n1 -N1 bash ./goostats NENE02018B.txt stats-NENE02018B.txt
-12      :       1542803204.336       2.230      0       0       0       0       srun -n1 -N1 bash ./goostats NENE02040A.txt stats-NENE02040A.txt
-13      :       1542803206.470       2.216      0       0       0       0       srun -n1 -N1 bash ./goostats NENE02040B.txt stats-NENE02040B.txt
-14      :       1542803206.472       2.276      0       0       0       0       srun -n1 -N1 bash ./goostats NENE02043A.txt stats-NENE02043A.txt
-15      :       1542803206.526       2.270      0       0       0       0       srun -n1 -N1 bash ./goostats NENE02043B.txt stats-NENE02043B.txt
+1       :       1542803199.833       2.205      0       0       0       0       srun -n1 -N1 bash goostats NENE01729A.txt stats-NENE01729A.txt
+2       :       1542803199.835       2.250      0       0       0       0       srun -n1 -N1 bash goostats NENE01729B.txt stats-NENE01729B.txt
+3       :       1542803199.837       2.251      0       0       0       0       srun -n1 -N1 bash goostats NENE01736A.txt stats-NENE01736A.txt
+4       :       1542803199.839       2.282      0       0       0       0       srun -n1 -N1 bash goostats NENE01751A.txt stats-NENE01751A.txt
+5       :       1542803202.040       2.213      0       0       0       0       srun -n1 -N1 bash goostats NENE01751B.txt stats-NENE01751B.txt
+6       :       1542803202.088       2.207      0       0       0       0       srun -n1 -N1 bash goostats NENE01812A.txt stats-NENE01812A.txt
+7       :       1542803202.091       2.207      0       0       0       0       srun -n1 -N1 bash goostats NENE01843A.txt stats-NENE01843A.txt
+8       :       1542803202.124       2.208      0       0       0       0       srun -n1 -N1 bash goostats NENE01843B.txt stats-NENE01843B.txt
+9       :       1542803204.257       2.210      0       0       0       0       srun -n1 -N1 bash goostats NENE01978A.txt stats-NENE01978A.txt
+10      :       1542803204.297       2.173      0       0       0       0       srun -n1 -N1 bash goostats NENE01978B.txt stats-NENE01978B.txt
+11      :       1542803204.300       2.223      0       0       0       0       srun -n1 -N1 bash goostats NENE02018B.txt stats-NENE02018B.txt
+12      :       1542803204.336       2.230      0       0       0       0       srun -n1 -N1 bash goostats NENE02040A.txt stats-NENE02040A.txt
+13      :       1542803206.470       2.216      0       0       0       0       srun -n1 -N1 bash goostats NENE02040B.txt stats-NENE02040B.txt
+14      :       1542803206.472       2.276      0       0       0       0       srun -n1 -N1 bash goostats NENE02043A.txt stats-NENE02043A.txt
+15      :       1542803206.526       2.270      0       0       0       0       srun -n1 -N1 bash goostats NENE02043B.txt stats-NENE02043B.txt
 ~~~
 {: .output}
 
