@@ -593,7 +593,7 @@ You can receive email alerts when your job begins and ends by adding the followi
 > 1. Add the following to the end of your job script
 > `echo $SLURM_ARRAY_TASK_ID`
 > 2. Submit the script with the `sbatch --array=0-1` command.
-> 3. When the job completes look at the outut file. What does the last line contain?
+> 3. When the job completes look at the output file. What does the last line contain?
 > 4. Try resubmitting with different array numbers, for example `10-11`. Be careful not to create too many jobs.
 > 5. What use is it for a job to know its array number? What might it do with that information?
 > 6. Try looking at the variables `$SLURM_JOB_ID` and `$SLURM_ARRAY_JOB_ID` what do these contain?
