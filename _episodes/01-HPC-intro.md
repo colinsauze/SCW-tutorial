@@ -52,11 +52,21 @@ Each individual computer in a cluster is commonly referred to as a "node". Insid
 
 ### HPC Wales
 
-HPC Wales ran from 2010 to 2015 and provided clusters in Aberystwyth, Bangor, Cardiff, Glamorgan and Swansea. The final systems are being shutdown in late 2018, all users should now use Supercomputing Wales.
+HPC Wales ran from 2010 to 2015 and provided clusters in Aberystwyth,
+Bangor, Cardiff, Glamorgan and Swansea. Access was conditional on
+collaboration with a small or medium-sized enterprise (SME). The final
+systems were shut down at the beginning of 2019; all research projects
+have now been transferred to the new Supercomputing Wales facilities.
 
 ### Supercomputing Wales
 
-Supercomputing Wales (SCW) is a new project to replace HPC Wales involving Aberystwyth, Bangor, Cardiff and Swansea universities. It started in 2015 and runs until 2020. It includes new systems in Cardiff (known as Hawk) and Swansea (known as Sunbird).
+Supercomputing Wales (sometimes referred to by the initialism SCW) is
+a new project to replace HPC Wales involving Aberystwyth, Bangor,
+Cardiff and Swansea universities. It started in 2015 and runs
+until 2020. It includes new systems in Cardiff (known as Hawk) and
+Swansea (known as Sunbird). Unlike HPC Wales, there is no requirement
+to interact with business to access the machine; the objective of the
+funding is to increase research capacity rather than enterprise.
 
 ## Supercomputing Wales Research Software Engineers
 
