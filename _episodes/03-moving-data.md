@@ -29,17 +29,17 @@ Here's a synopsis of filesystems on Hawk in Cardiff:
 
 |Name|Path|Default Quota|Disk Size|Backed Up|
 |------|---|----|-----|---|-----|
-|Home|/home/user.name|50GB|420TB|Only in Cardiff|
-|Group|/home/scwXXXX|Negotiable|420TB (same disk as home)|Only in Cardiff|
-|Scratch|/scratch/user.name|N/A|692TB|No|
+|Home|`/home/username`|50GB, 100,000 files|420TB|Only in Cardiff|
+|Group|`/home/scwXXXX`|Negotiable|420TB (same disk as home)|Only in Cardiff|
+|Scratch|`/scratch/username`|N/A|692TB|No|
 
 and on Sunbird in Swansea:
 
 |Name|Path|Default Quota|Disk Size|Backed Up|
 |------|---|----|-----|---|-----|
-|Home|/home/user.name|100GB|231TB|No|
-|Group|/home/scwXXXX|Negotiable|231TB (same disk as home)|No|
-|Scratch|/scratch/user.name|N/A|808TB|No|
+|Home|`/home/username`|100GB, 100,000 files|231TB|No|
+|Group|`/home/scwXXXX`|Negotiable|231TB (same disk as home)|No|
+|Scratch|`/scratch/username`|N/A|808TB|No|
 
 
 **Important!! Ensure that you don't store anything longer than necessary on scratch, this can negatively affect other people’s jobs on the system.**
@@ -49,7 +49,7 @@ and on Sunbird in Swansea:
 
 ## How much quota do I have left on my home directory?
 
-Login to a head node (e.g. sunbird.swansea.ac.uk or hawklogin.cf.ac.uk) and run the ```myquota``` command. This will tell you how much space is left in your home directory.
+Login to a head node (e.g. `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk`) and run the ```myquota``` command. This will tell you how much space is left in your home directory.
 
 ~~~
 $ myquota
@@ -65,6 +65,12 @@ Disk quotas for grp a.cos (gid 5000124):
 
 ## Group Filestore
 
+If you have multiple collaborators working on a particular project and
+would like to share common software or data across the project, then
+it will be convenient for you to use a shared filestore. These can be
+created on `/home` (for long-term use, e.g. software) or on `/scratch`
+(for short-term data). If you would like one setup for you, you can
+raise a support ticket or speak to one of your local RSEs.
 
 ## How much scratch have I used?
 
@@ -87,7 +93,7 @@ You can copy files to/from your Supercomputing Wales home and scratch drives usi
 
 ### Copying data using SFTP
 
-Use the ```sftp``` command and connect to the system. This takes the argument of the username followed by an @ symbol and then the hostname. Optionally you can specify what directory to start in by putting a ```:``` symbol after this and adding the directory name. The command below will start in ```/home/s.jane.doe/data```, if no directory is specified then sftp defaults to your home directory.
+Use the ```sftp``` command and connect to the system. This takes the argument of the username followed by an `@` symbol and then the hostname. Optionally you can specify what directory to start in by putting a ```:``` symbol after this and adding the directory name. The command below will start in ```/home/s.jane.doe/data```, if no directory is specified then sftp defaults to your home directory.
 
 ~~~
 sftp s.jane.doe@sunbird.swansea.ac.uk:/home/s.jane.doe/data
@@ -123,11 +129,11 @@ lcd - change directory on the local system
 {:. callout}
 
 
-### Copying data using Filezilla
+### Copying data using FileZilla
 
-Filezilla is a graphical SCP/SFTP client available for Windows, Mac and Linux. You can download it from [Filezilla download](https://filezilla-project.org/download.php?type=client)
+FileZilla is a graphical SCP/SFTP client available for Windows, Mac and Linux. You can download it from [FileZilla download](https://filezilla-project.org/download.php?type=client)
 
-Open filezilla and type ```sftp://sunbird.swansea.ac.uk``` or ```sftp://hawklogin.cf.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
+Open FileZilla and type ```sftp://sunbird.swansea.ac.uk``` or ```sftp://hawklogin.cf.ac.uk``` into the host box. Enter your username and password in the username/password boxes.
 
 ![Transferring files using FileZilla](../fig/filezilla1.png)
 
@@ -144,7 +150,7 @@ Files can be transferred either by dragging and dropping them from one side to t
 ![Transferring files using FileZilla](../fig/filezilla4.png)
 ![Transferring files using FileZilla](../fig/filezilla5.png)
 
-You can change directory on the remote host by typing a path into the "Remote site:" box. For example type in ```/scratch/user.name``` (where user.name is your username) to access your scratch directory.
+You can change directory on the remote host by typing a path into the "Remote site:" box. For example type in ```/scratch/username``` (where `username` is your username) to access your scratch directory.
 
 ![Transferring files using FileZilla](../fig/filezilla6.png)
 
@@ -169,6 +175,6 @@ You can change directory on the remote host by typing a path into the "Remote si
 > ## Copying files.
 > 1. Login to a head node.
 > 2. Create a file called hello.txt by using the nano text editor (or the editor of your choice) and typing `nano hello.txt`. Enter some text into the file and press Ctrl+X to save it.
-> 3. Use either Filezilla or SCP/SFTP to copy the file to your computer.
-> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using Filezilla or SCP/SFTP and examine its conents with nano on the head node.
+> 3. Use either FileZilla or SCP/SFTP to copy the file to your computer.
+> 4. Create a file on your computer using a text editor. Copy that file to your Supercomputing Wales home directory using FileZilla or SCP/SFTP and examine its conents with `nano` on the head node.
 {: .challenge}
