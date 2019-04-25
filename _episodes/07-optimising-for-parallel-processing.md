@@ -337,5 +337,35 @@ hello world 3 c
 
 These options also work when using `::::` to take the list from a file instead.
 
+### How parallel to be?
+
+GNU Parallel works best when you have a much larger number of tasks
+than you have CPU cores. This is for two reasons: firstly,
+because when one task ends, Parallel
+will automatically start another one on the same core. If you have as
+many cores as you have tasks, then if some finish early then those
+cores will become idle. Secondly, requesting a larger number of cores
+means that Slurm has to find that many cores all available at the same
+time, so you will have a longer wait.
+
+Imagine that you have 1,000 tasks (e.g. image files that need to be
+processed), each of which take between 1 and 5 minutes. Requesting
+1,000 cores would mean Slurm would have to wait for almost
+a quarter of the machine to become available. Then if most jobs
+finished after 1 minute, but one particularly tough task took 5
+minutes to process, then the 1,000 cores would all be reserved to you
+(but mostly sitting idle) for the entire 5 minutes. The wait to start
+might be a few hours, after which the job would finish in around five
+minutes.
+
+If instead you requested 40 cores (i.e. one node), then Slurm would
+find it a lot easier to schedule your job---you'd be waiting on a
+single node (less than 1% of the cluster) to become available, and
+would likely start within a few minutes to an hour, unless the cluster
+was particularly busy. The run time would be a little longer---around
+half an hour---but the CPU cores would be fully occupied, and you
+would get your results within an hour or two of submitting the job,
+whereas the short, wide job would still be waiting to start.
+
 {: .output}
 
