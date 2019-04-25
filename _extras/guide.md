@@ -64,7 +64,7 @@ Scratch dirs in /scratch/username
 
 ## Interactive jobs
 Explain account and reservation codes. Export `SBATCH_ACCOUNT/RESERVATION` or `SALLOC_ACCOUNT/RESERVATION`
-`salloc -n 1 --ntasks-per-node=1 --account=SCW1389 --reservation=SCW1389_XX` 
+`salloc -n 1 --ntasks-per-node=1 --account=scw1389 --reservation=scw1389_XX` 
 `srun --pty -n 1 /bin/bash`
 `squeue`
 
@@ -119,8 +119,8 @@ This runs multiple copies of the same thing within a job. Lets us use multiple n
 `#SBATCH --ntasks-per-node=1`
 
 `#SBATCH --nodes=2`
-`#SBATCH --account=SCW1380_X`
-`#SBATCH --reservation=SCW1380_X`
+`#SBATCH --accountx=scw1389_XX`
+`#SBATCH --reservation=scw1389_XX`
 
 `###`
 
@@ -191,8 +191,8 @@ crude way:
 `#SBATCH --error=test.err.%J`
 `#SBATCH --time=0-00:01`
 `#SBATCH --ntasks=3`
-`#SBATCH --account=SCW1380_X`
-`#SBATCH --reservation=SCW1380_X`
+`#SBATCH --account=scw1389`
+`#SBATCH --reservation=scw1389_XX`
 
 `###`
 
@@ -252,8 +252,8 @@ parallel.sh:
 `#SBATCH -o output.%J              #Job output`
 
 `#SBATCH -t 00:00:05               #Max wall time for entire job`
-`#SBATCH --account=SCW1380_X`
-`#SBATCH --reservation=SCW1380_X`
+`#SBATCH --account=scw1389`
+`#SBATCH --reservation=scw1389_XX`
 
 `###`
 
