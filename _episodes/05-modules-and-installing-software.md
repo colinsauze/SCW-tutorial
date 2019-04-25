@@ -208,7 +208,7 @@ Commercial software will require the appropriate licenses.
 > > import matplotlib.pyplot as plt
 > > plt.plot(range(10))
 > > jobid=str(os.environ.get('SLURM_JOBID'))
-> > plt.title('Job id '+jobid)
+> > plt.title(f'Job id {jobid}')
 > > plt.savefig('temp.png')
 > > ~~~
 > > {: .bash}
