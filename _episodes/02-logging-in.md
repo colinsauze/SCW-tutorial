@@ -18,23 +18,24 @@ keypoints:
 
 # Logging in
 
-Your username is your institutional ID prefixed by 'a' for Aberystwyth users, 'b' for Bangor users, 'c' for Cardiff users and 's' for Swansea users. External collaborators will have a username beginning with a 'x'.
+Your username is your institutional ID prefixed by `a.` for
+Aberystwyth users, `b.` for Bangor users, `c.` for Cardiff users and `s.` for Swansea users. External collaborators will have a username beginning with `x.`.
 
-Aberystwyth and Swansea users should log in to the Swansea Sunbird system by typing:
+Aberystwyth and Swansea users (and their external collaborators) should log in to the Swansea Sunbird system by typing:
 
 ~~~
 $ ssh username@sunbird.swansea.ac.uk
 ~~~
 {: .bash}
 
-Bangor and Cardiff Users should log in to the Cardiff Hawk system by typing:
+Bangor and Cardiff Users (and their external collaborators) should log in to the Cardiff Hawk system by typing:
 
 ~~~
 $ ssh username@hawklogin.cf.ac.uk
 ~~~
 {: .bash}
 
-If you use Windows and haven't installed the Git bash shell, you can instead use PuTTY
+If you use Windows and haven't installed the Git bash shell, you can instead use [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 and enter either `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk` in the hostname box.
 
 
