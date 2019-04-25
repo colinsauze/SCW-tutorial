@@ -112,9 +112,12 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 # Exercises
 
 > ## Logging into Supercomputing Wales
-> 1. In your web browser go to [https://my.supercomputing.wales](https://my.supercomputing.wales) and log in with your university username and password.
-> 2. Click on "Reset SCW Password" and choose a new password for logging into the HPC. Your username is displayed in the "Account summary" box on the main page. Its usually a/b/c/s. and your normal university login details.
-> 3. Log in to sunbird.swansea.ac.uk or hawklogin.cf.ac.uk using your SSH client.
+>
+> If you haven't already:
+>
+> 1. In your web browser go to [My Supercomputing Wales](https://my.supercomputing.wales) and log in with your university username and password.
+> 2. Click on "Reset SCW Password" and choose a new password for logging into the HPC. Your username is displayed in the "Account summary" box on the main page. Its usually `a.`/`b.`/`c.`/`s.` and your normal university login details.
+> 3. Log in to `sunbird.swansea.ac.uk` or `hawklogin.cf.ac.uk` using your SSH client.
 > 4. Run the `sinfo` command to see how busy things are.
 > 5. Try `sinfo --long`, what extra information does this give?
 {: .challenge}
