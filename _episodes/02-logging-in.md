@@ -90,11 +90,22 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 ~~~
 {: .output}
 
- * compute* means this is the default partition.
- * AVAIL tells us if the partition is available.
- * TIMELIMIT tells us if there's a time limit for jobs
- * NODES is the number of nodes in the this partition.
- * STATE, drain means the node will become unavailable once the current job ends. down is off, allow is allocated and mix is ...
+ * The `*` after `compute` means that this is the default partition.
+ * `AVAIL` tells us if the partition is available.
+ * `TIMELIMIT` tells us if there's a time limit for jobs
+ * `NODES` is the number of nodes in this partition in this particular
+   state.
+ * `STATE` describes what these nodes are doing:
+     * `drain` means that the node will become unavailable once the
+       jobs currently running on it complete.
+	 * `down` means that the node is is powered off or otherwise
+       unavailable for use.
+	 * `alloc` means that the node is fully allocated; all CPU cores
+       are in use running users' software.
+	 * `mix` means that some of the CPU cores on a node are allocated
+       to a user, and others are available for use.
+	 * `idle` means that the node is not currently allocated, and is
+       available for use.
 
 
 
