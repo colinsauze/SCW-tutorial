@@ -220,7 +220,8 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
 # Ensure that parallel is available to us
