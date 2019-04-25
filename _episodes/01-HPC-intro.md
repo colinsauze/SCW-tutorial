@@ -67,31 +67,3 @@ until 2020. It includes new systems in Cardiff (known as Hawk) and
 Swansea (known as Sunbird). Unlike HPC Wales, there is no requirement
 to interact with business to access the machine; the objective of the
 funding is to increase research capacity rather than enterprise.
-
-## Supercomputing Wales Research Software Engineers
-
-Each university is employing research software engineers who will work with researchers to:
-
-* Convert existing software to run on the HPC system
-* Optimise code to run more efficiently on HPC systems
-* Write new software
-* Help with training, on-boarding and project development
-
-
-### How to get access?
-
-Apply for an account via the ["My Supercomputing Wales" webpage](https://my.supercomputing.wales). You can sign into this webpage using your normal university username and password. You will then be able to set or change your Supercomputing Wales password from this page.
-
-To use the system you will have to apply for a project as well as a user account. Everyone on this course should have been added to a training project, this project is time limited. If you would like to use Supercomputing Wales for your research then you will have to apply for your own project or join an existing one.
-
-#### Project Application Process
-
-The project form is used to assess whether Supercomputing Wales has enough resources for what you want. PhD students and RAs need to get your supervisor/PI to approve their projects. Projects are assessed by Supercomputing Wales staff who are looking for two key targets:
-
-  * Grant income that can be attributed to Supercomputing Wales.
-  * Science Outputs (e.g. journal papers)
-
-At this stage you do NOT need to pay any money to Supercomputing Wales, simply attribute that the grant funding required access to the system. Funding which attributes other projects funded by the Welsh European Funding Office (WEFO) cannot be counted towards Supercomputing Wales.
-
-If you are writing a grant application and intend to use Supercomputing Wales please mention it in the grant and let us know. There are project targets to bring in approx £8 million of funding, Aberystwyth's target is around £800k. This should be easily achievable, but bringing in far more will help us get follow on funding for Supercomputing Wales.
-
