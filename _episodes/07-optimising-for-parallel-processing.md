@@ -65,7 +65,8 @@ harder.
 
 GNU Parallel is a utility specially designed to run multiple parallel jobs. It can execute a set number of tasks at a time and when they are complete run more tasks.
 
-GNU Parallel can be loaded a module called "parallel". Its syntax is a bit complex, but its very powerful.
+GNU Parallel can be loaded a module called `parallel`. Its syntax is a
+bit complex, but gives you access to a lot of power and flexibility.
 
 
 ### A simple GNU Parallel example
@@ -79,10 +80,14 @@ module load parallel
 
 > ## Citing Software
 > 
-> Each time you run GNU parallel it will remind that you academic tradition requires you to cite the software you used. You can stop this message by running `parallel --citation` once and parallel will then remember not to show this message anymore. Running this will also show you the Bibtex code for citing parallel in your papers.
+> Each time you run GNU Parallel it will remind that you academic
+> tradition requires you to cite the software you used. You can stop
+> this message by running `parallel --citation` once and Parallel will
+> then remember not to show this message anymore. Running this will also
+> show you the BibTeX code for citing parallel in your papers.
 {: .callout}
 
-The command below will run ls to list all the files in the current directory and it will send the list of files to parallel. Parallel will in turn run the echo command on each input it was given. The `{1}` means to use the first argument (and in this case its the only one) as the parameter to the echo command.
+The command below will run ls to list all the files in the current directory and it will send the list of files to Parallel. Parallel will in turn run the echo command on each input it was given. The `{1}` means to use the first argument (and in this case its the only one) as the parameter to the echo command.
 
 ~~~
 ls | parallel echo {1}
@@ -105,7 +110,9 @@ parallel echo {1} ::: $(ls)
 ~~~
 {: .bash}
 
-Here we specify what command to run first and the put the data to process second, after the `:::`.
+Here, the `:::` is a separator, indicating that the arguments to
+Parallel are finished, and what follows is a list of items to work
+through in parallel.
 
 
 ### A more complex example
@@ -114,7 +121,10 @@ As an example we're going to use the example data from the Software Carpentry [U
 
 #### Downloading the Data
 
-First we need to download Nelle's data from the Software Carpentry website. This can be downloaded with the wget command, the files then need to be extracted from the zip archive with the unzip command.
+First we need to download Nelle's data from the Software Carpentry
+website. This can be downloaded with the `wget` command, the files
+then need to be extracted from the zip archive with the `unzip`
+command.
 
 ~~~
 wget http://swcarpentry.github.io/shell-novice/data/data-shell.zip
@@ -122,18 +132,21 @@ unzip data-shell.zip
 ~~~
 {: .bash}
 
-The data we'll be using is now extracted into the directory data-shell/north-pacific-gyre/2012-07-03
+The data we'll be using is now extracted into the directory
+`data-shell/north-pacific-gyre/2012-07-03`
 
 ~~~
 cd data-shell/north-pacific-gyre/2012-07-03/
 ~~~
 {: .bash}
 
-Nelle needs to run a program called `goostats` on each file to process it. During the Unix Shell lesson this data was processed in series by the following set of commands:
+Nelle needs to run a program called `goostats` on each file to process
+it. During the Unix Shell lesson these data were processed in series
+by the following set of commands:
 
 ~~~
 # Calculate stats for data files.
-for datafile in $(ls NENE*[AB].txt)
+for datafile in NENE*[AB].txt
 do
     echo $datafile
     bash goostats $datafile stats-$datafile
@@ -141,16 +154,19 @@ done
 ~~~
 {: .bash}
 
-The `ls NENE*[AB].txt` command lists all the files which start with "NENE" and end either A.txt or B.txt. The for loop will work through the list of files produced by ls one by one and runs goostats on each one.
+The `NENE*[AB].txt` expression returns all the files which start with
+`NENE` and end either `A.txt` or `B.txt`. The for loop will work
+through the list of files produced by `ls` one by one, and runs
+`goostats` on each one.
 
 Lets convert this process to run in parallel by using GNU Parallel instead. By running
 
 ~~~
-ls NENE*[AB].txt | parallel bash goostats {1} stats-{1}
+parallel bash goostats {1} stats-{1} ::: NENE*[AB].txt
 ~~~
 {: .bash}
 
-We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we run the time command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
+We'll run the same program in parallel. GNU parallel will automatically run on every core on the system, if there are more files to process than there are cores it will run a task on each core and then move on to the next once those finish. If we insert the `time` command before both the serial and parallel versions of this process we should see the parallel version runs several times faster.
 
 ### Using a list stored in a file
 
@@ -163,7 +179,7 @@ ls NENE*[AB].txt > files_to_process.txt
 ~~~
 {: .bash}
 
-Now, to tell parallel to use this file as a list of arguments, we can use `::::` instead of `:::`.
+Now, to tell Parallel to use this file as a list of arguments, we can use `::::` instead of `:::`.
 
 ~~~
 parallel bash goostats {1} stats-{1} :::: files_to_process.txt
@@ -220,9 +236,12 @@ to run enough programs to fill all of the nodes that we have allocated. Let's cr
 ~~~
 #!/bin/bash --login
 ###
-#SBATCH --ntasks 80               # Number of processors we will use - 80 will fill two nodes
-#SBATCH --output output.%J              # Job output
-#SBATCH --time 00:01:00               # Max wall time for entire job
+# Number of processors we will use (80 will fill two nodes)
+#SBATCH --ntasks 80
+# Output file location
+#SBATCH --output output.%J
+# Time limit for this job
+#SBATCH --time 00:01:00
 # specify our current project
 # change this for your own work
 #SBATCH --account=scw1389
@@ -308,9 +327,12 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 
 ### More complex command handling with Parallel
 
-We can run parallel with multiple arguments. For example `parallel echo "hello {1} {2}" ::: 1 2 3 ::: a b c`
-
-Which runs each possible combination of the first and second arguments to give:
+We can run parallel with multiple arguments. For example
+~~~
+parallel echo "hello {1} {2}" ::: 1 2 3 ::: a b c
+~~~
+{: .bash}
+will run each possible combination of the first and second arguments to give:
 
 ~~~
 hello 1 a
@@ -325,6 +347,17 @@ hello 3 c
 ~~~
 {: .output}
 
+For example, if you had a list of image files in `images.txt`, and you
+wanted to perform an analysis of the three different colour channels,
+as well as greyscale, you might use the following:
+~~~
+parallel process_image --channel={1} {2} ::: red green blue grey :::: images.txt
+~~~
+{: .bash}
+
+This generalises to provide a concise way to perform very large
+parameter sweeps in parallel.
+
 If we only want to run each argument as a pair, so there are only three outputs adding the `+` symbol to the end of the second `:::` will achieve this:
 
 ~~~
@@ -334,8 +367,18 @@ hello world 1 a
 hello world 2 b
 hello world 3 c
 ~~~
+{: .bash}
 
 These options also work when using `::::` to take the list from a file instead.
+
+For example, if you again had a list of image files to process in
+`images.txt`, but now you wanted a different brightness cutoff for
+each, which you stored in a second file, `brightnesses.txt`, you could
+use something like:
+~~~
+parallel process_image --brightness={1} {2} :::: brightnesses.txt ::::+ images.txt
+~~~
+{: .bash}
 
 ### How parallel to be?
 
