@@ -1,5 +1,5 @@
 ---
-title: "SCW Introduction"
+title: "Supercomputing Wales Introduction"
 author: "Colin Sauze"
 teaching: 10
 exercises: 0

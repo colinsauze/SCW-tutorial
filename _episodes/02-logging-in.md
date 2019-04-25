@@ -1,5 +1,5 @@
 ---
-title: "Logging in to SCW"
+title: "Logging in to Supercomputing Wales"
 author: "Colin Sauze"
 teaching: 20
 exercises: 15
