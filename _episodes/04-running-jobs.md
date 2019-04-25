@@ -22,7 +22,7 @@ keypoints:
 
 # Working with the scheduler
 
-The scheduler is responsible for listening to your job requests, then finding the proper compute node that meets your job's resource requirements -- RAM, number of cores, time, etc --. It dispatches the job to a compute node, collects info about the completed work, and stores information about your job. If you've asked it to do so, it will even notify you about the status of your job (e.g. begin, end, fail, etc).
+The scheduler is responsible for listening to your job requests, then finding the proper compute node that meets your job's resource requirements -- RAM, number of cores, time, etc. It dispatches the job to a compute node, collects info about the completed work, and stores information about your job. If you've asked it to do so, it will even notify you about the status of your job (e.g. begin, end, fail, etc).
 
 
 ## Running interactive jobs
@@ -30,10 +30,11 @@ The scheduler is responsible for listening to your job requests, then finding th
 There are two ways to run jobs on a cluster. One, usually done at the start, is to get an
 interactive/foreground session on a compute node. This will give you a command prompt on a compute node and let you run the commands of your choice there.
 
-If you want to experiment with some code and test it you should run it this way.
-
-** Don't run jobs on the login nodes **
-
+If you want to experiment with some code and test it you should run it
+this way. ** Don't run jobs on the login nodes ** -- the two 40-core
+login nodes are dedicated to letting users connect and compile their
+software; their resources are negligible compared to the 5,000 CPU
+cores on the compute nodes.
 
 To get an interactive session, you first need to issue a `salloc` command to reserve some resources.
 
@@ -56,16 +57,47 @@ salloc: Nodes scs0018 are ready for job
 
 > ## Acccounts and Reservations
 >
-> We can optionally specify an account and reservation ID to Slurm. The account ID tells the system which  project your job will be accounted against, if you are a member of multiple projects some > might have > different priorities and limitations. A reservation is where some compute nodes have been reserved for a particular project at a particular time. To ensure nodes are available for this course we may have obtained a reservation. Your instructor will tell you which acccount and reservation to use here. The account can be specified either through the --account option to salloc (and the sbatch command which we'll use soon) and the reservation through the --reservation option. Alternatively these can be specified in the SALLOC_ACCOUNT, SBATCH_ACCOUNT, SALLOC_RESERVATION and SBATCH_RESERVATION environment variables. 
+> We can optionally specify an account and reservation ID to
+> Slurm. The account ID tells the system which  project your job will be
+> accounted against, if you are a member of multiple projects some might
+> have different priorities and limitations. 
+>
+> A reservation is where some compute nodes have been reserved for a
+> particular project at a particular time. To ensure nodes are available
+> for this course we may have obtained a reservation. Your instructor
+> will tell you which acccount and reservation to use here. The account
+> can be specified either through the `--account` option to `salloc`
+> (and to the `sbatch` command which we'll use soon) and the reservation
+> through the `--reservation` option. Alternatively, these can be
+> specified in the `SALLOC_ACCOUNT`, `SBATCH_ACCOUNT`,
+> `SALLOC_RESERVATION` and `SBATCH_RESERVATION` environment variables.
 {: .callout}
 
-We have now allocated ourselves a host to run a program on. The `-n 1` tells slurm how many copies of the task we will be running. The `--ntasks-per-node=1` tells Slurm that we will just be running one task for every node we are allocated. We could increase either of these numbers if we want to run multiple copies of a task and if we want to run more than one copy per node. 
+We have now allocated ourselves a host to run a program on. The `-n 1`
+tells Slurm how many copies of the task we will be running. The
+`--ntasks-per-node=1` tells Slurm that we will just be running one
+task for every node we are allocated. We could increase either of
+these numbers if we want to run multiple copies of a task and if we
+want to run more than one copy per node.
 
-The `--account` option tells Slurm which project to account your usage against, if you are only a member of one project then this will default to that project. If you're a member of multiple projects then it will default to the first one. The accounting information is used to measure what resources a project has consumed and to prioritise its use, so its important to choose the right project. 
+The `--account` option tells Slurm which project to account your usage
+against, if you are only a member of one project then this will
+default to that project. If you're a member of multiple projects then
+you must specify this---if you do not, the job will fail to submit,
+and you will receive an error reminding you to set it. The accounting
+information is used to measure what resources a project has consumed
+and to prioritise its use, so its important to choose the right
+project.
 
-To ensure nodes are available for this training workshop a reservation may have been made to prevent anyone else using a few nodes. In order to make use of these you must use the `--reservation` option too, if you don't then you'll have to wait in the same queue as everyone else. 
+To ensure nodes are available for this training workshop a reservation
+may have been made to prevent anyone else using a few nodes. In order
+to make use of these you must use the `--reservation` option too; if
+you don't then you'll have to wait in the same queue as everyone else.
 
-To actually run a command we now need to issue the `srun` command. This also takes a `-n` parameter to tell Slurm how many copies of the job to run and it takes the name of the program to run. To run a job interactively we need another argument `--pty`.
+To actually run a command we now need to issue the `srun`
+command. This also takes a `-n` parameter to tell Slurm how many
+copies of the job to run and it takes the name of the program to
+run. To run a job interactively we need another argument: `--pty`.
 
 ~~~
 srun --pty /bin/bash
@@ -73,7 +105,9 @@ srun --pty /bin/bash
 {: .bash}
 
 
-If you run command above you will see the hostname in the prompt change to the name of the compute node that slurm has allocated to you. In the example below the compute node is called `scs0018`.
+If you run command above you will see the hostname in the prompt
+change to the name of the compute node that Slurm has allocated to
+you. In the example below the compute node is called `scs0018`.
 
 ~~~
 [s.jane.doe@sl1 ~]$ srun --pty /bin/bash
@@ -94,7 +128,11 @@ scs0018
 {: .output}
 
 
-Once we are done working with the compute node we need to disconnect from it. The `exit` command will exit the bash program on the compute node causing us to disconnect. After this command is issued the hostname prompt should change back to the login node's name (e.g. sl1 or cl1).
+Once we are done working with the compute node we need to disconnect
+from it. The `exit` command will exit the bash program on the compute
+node causing us to disconnect. After this command is issued the
+hostname prompt should change back to the login node's name
+(e.g. `sl1` or `cl1`).
 
 ~~~
 [s.jane.doe@scs0018  ~]$ exit
@@ -103,7 +141,11 @@ exit
 ~~~
 {: .output}
 
-At this point we still hold an allocation for a node and could run another job if we wish. We can confirm this by examining the queue of our jobs with the `squeue` command. By default this will show all users' jobs, which is a bit overwhelming, so we can use `--user=` and our username to filter to our own jobs only.
+At this point we still hold an allocation for a node, and could run
+another job on it if we wished. We can confirm this by examining the
+queue of our jobs with the `squeue` command. By default this will show
+all users' jobs, which is a bit overwhelming, so we can use `--user=`
+and our username to filter to our own jobs only.
 
 ~~~
 squeue --user=s.jane.doe
@@ -168,6 +210,7 @@ nano batchjob.sh
 #SBATCH --time=0-00:01
 # maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
+# run a single task, using a single CPU core
 #SBATCH --ntasks=1
 # specify our current project
 # change this for your own work
@@ -183,7 +226,30 @@ nano batchjob.sh
 ~~~
 {: .bash}
 
-This is actually a bash script file containing all the commands that will be run. Lines beginning with a `#` are comments which bash will ignore. However lines that begin `#SBATCH` are instructions for the `sbatch` program. The first of these (`#SBATCH --job-name=hostname`) tells sbatch the name of the job, in this case we will call the job hostname. The `--output` line tells sbatch where output from the program should be sent, the `%J` in its name means the job number. The same applies for the `--error` line, except here it is for error messages that the program might generate, in most cases this file will be blank. The `--time` line limits how long the job can run for, this is specified in days, hours and minutes. The `--mem-per-cpu` tells Slurm how much memory to allow the job to use on each CPU it runs on, if the job exceeds this limit Slurm will automatically stop it. You can set this to zero for no limits. However by putting in a sensible number you can help allow other jobs to run on the same node. `--account` and `--reservation` tell Slurm to count usage against the project created for training workshops, and to use the nodes that have been reserved for today's training. (The value after `--reservation` changes for each workshop; your instructor will give you a value to use.) The final line specifies the actual commands which will be executed, in this case its the `hostname` command which will tell us the name of the compute node which ran our job.
+This is actually a bash script file containing all the commands that
+will be run. Lines beginning with a `#` are comments which bash will
+ignore. However lines that begin `#SBATCH` are instructions for the
+`sbatch` program. The first of these (`#SBATCH --job-name=hostname`)
+tells sbatch the name of the job; in this case we will call the job
+hostname. The `--output` line tells sbatch where output from the
+program should be sent; the `%J` in its name means the job
+number. Including the job number in the output filename means that
+repeated runs of the same script won't overwrite the output file. The
+same applies for the `--error` line, except here it is for error
+messages that the program might generate, in most cases this file will
+be blank. The `--time` line limits how long the job can run for, this
+is specified in days, hours and minutes. The `--mem-per-cpu` tells
+Slurm how much memory to allow the job to use on each CPU it runs on,
+if the job exceeds this limit Slurm will automatically stop it. You
+can set this to zero for no limits. However by putting in a sensible
+number you can help allow other jobs to run on the same
+node. `--account` and `--reservation` tell Slurm to count usage
+against the project created for training workshops, and to use the
+nodes that have been reserved for today's training. (The value after
+`--reservation` changes for each workshop; your instructor will give
+you a value to use.) The final line specifies the actual commands
+which will be executed, in this case its the `hostname` command which
+will tell us the name of the compute node which ran our job.
 
 > ## Running on your own
 >
@@ -270,8 +336,8 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 #SBATCH --time=0-00:01
 # maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
+# run a single task, using a single CPU core
 #SBATCH --ntasks=1
-#SBATCH --nodes=1
 # specify our current project
 # change this for your own work
 #SBATCH --account=scw1389
@@ -410,19 +476,32 @@ The `sacct` command lists all the jobs you have run. By default this shows the J
 ~~~
 {: .output}
 
-In the output above the account is the project you are associated with. scw1000 is the RSE project. You'll probably see a different project account here.
+In the output above the account is the project you are associated with. `scw1000` is the RSE project. You'll probably see a different project account here.
 
 
 > ## Using the `sbatch` command.
-> 1. Write a submission script to run the hostname command on one node, with one core using one megabyte of RAM and a maximum run time of one minute. Have it save its output to hostname.out.%J and errors to hostname.err.%J.
+>
+> If you haven't done so already:
+>
+> 1. Write a submission script to run the hostname command on one
+>    node, with one core using one megabyte of RAM and a maximum run
+>    time of one minute. Have it save its output to `hostname.out.%J`
+>    and errors to `hostname.err.%J`.
 > 2. Run your script using `sbatch`
 > 3. Examine the output file, which host did it run on?
 > 4. Try running it again, did your command run on the same host?
-> 5. Now add the command `/bin/sleep 70` before the line running hostname in the script. Run the job again and examine the output of `squeue` as it runs. How many seconds does the job run for before it ends? Hint: the command `watch -n 1 squeue` will run squeue every second and show you the output. Press CTRL+C to stop it.
-> 6. What is in the .err file, why did you script exit? Hint: if it wasn't due to the time expiring try altering another parameter so it is due a time expiration.
+> 5. Now add the command `/bin/sleep 70` before the line running
+>    hostname in the script. Run the job again and examine the output
+>    of `squeue` as it runs. How many seconds does the job run for
+>    before it ends? Hint: the command `watch -n 1 squeue` will run
+>    squeue every second and show you the output. Press CTRL+C to stop
+>    it.
+> 6. What is in the `.err` file, why did you script exit? Hint: if it
+>    wasn't due to the time expiring try altering another parameter so
+>    it is due a time expiration.
 {: .challenge}
 
-## Running multiple copies of a job with Srun
+## Running multiple copies of a job with `srun`
 
 So far we've only run a single copy of a program. Often we'll need to run multiple copies of something. To do this we can combine the `sbatch` and `srun` commands. Instead of just placing the command at the end of the script we'll `srun` the command.
 This will allow multiple copies of the command to run. In the example below two copies of the hostname command are run on two different nodes.
@@ -440,7 +519,9 @@ This will allow multiple copies of the command to run. In the example below two 
 #SBATCH --time=0-00:01
 # maximum memory of 10 megabytes
 #SBATCH --mem-per-cpu=10
+# run a two tasks
 #SBATCH --ntasks=2
+# run the tasks across two nodes; i.e. one per node
 #SBATCH --nodes=2
 # specify our current project
 # change this for your own work
@@ -455,14 +536,14 @@ srun /bin/hostname
 ~~~
 {: .bash}
 
-Save this as job.sh and run it with sbatch
+Save this as `batchjob_parallel.sh` and run it with `sbatch`
 
 ~~~
-[s.jane.doe@sl1 ~]$ sbatch job.sh
+[s.jane.doe@sl1 ~]$ sbatch batchjob_parallel.sh
 ~~~
 {: .bash}
 
-The output will now go into hostname.out.jobnumber and should contain two different hostnames.
+The output will now go into `hostname.out.jobnumber` and should contain two different hostnames.
 
 
 ## Job Arrays
@@ -489,12 +570,12 @@ Running `squeue` as this is happening will show three distinct jobs, each with a
 
 ~~~
 [s.jane.doe@sl1 ~]$ ls -rt | tail -6
-hostname.out.3739592.scs0018
-hostname.out.3739591.scs0018
-hostname.out.3739590.scs0096
-hostname.err.3739590.scs0096
-hostname.err.3739592.scs0018
-hostname.err.3739591.scs0018
+hostname.out.3739592
+hostname.out.3739591
+hostname.out.3739590
+hostname.err.3739590
+hostname.err.3739592
+hostname.err.3739591
 ~~~
 {: .bash}
 
@@ -516,8 +597,9 @@ Another way to think of 'reserving' a compute node for you job is like making a 
 * if you bring more guests to your dinner, there won't be room at the restaurant, but the wait staff may try to fit them in. If so, things will be more crowded and the kitchen (and the whole restaurant) may slow down dramatically
 * if you bring fewer guests and don't notify the staff in advance, the extra seats are wasted; no one else can take the empty places, and the restaurant may lose money.
 
-Never use a piece of software for the first time without looking to see what command-line options are available and what default parameters are being used
-	-- acgt.me · by Keith Bradnam
+"Never use a piece of software for the first time without looking to
+see what command-line options are available and what default
+parameters are being used" ---[Keith Bradnam, acgt.me](http://www.acgt.me/blog/2015/4/27/the-dangers-of-default-parameters-in-bioinformatics-lessons-from-bowtie-and-tophat)
 	
 ### Time
 This is determined by test runs that you do on your code during an interactive session.
@@ -527,7 +609,13 @@ then reduce time on later runs. **The Supercomputing Wales hubs have a limit of 
 **Please!** Due to scheduler overhead, bundle commands for minimum of 10 minutes / job
 
 ### Memory:
-We recommend that you check the software docs for memory requirements. But often times these are not stated, so we can take another approach. On the Supercomputing Wales hubs, each job is allowed, on average, 9 GB RAM/core allocated. So, try 3 GB and do a trial run via `srun` or `sbatch`. If you're job was killed, look at your log files or `sacct`. If it shows a memory error, you went over. Ask for more and try again.
+We recommend that you check the software docs for memory
+requirements. But since these are not stated, we can take another
+approach. On the Supercomputing Wales hubs, each job is allowed, on
+average, 9 GB RAM/core allocated. So, try 3 GB and do a trial run via
+`srun` or `sbatch`. If your job was killed, look at your log files or
+`sacct`. If it shows a memory error, you went over. Ask for more and
+try again.
 
 Once the job has finished, ask the scheduler how much RAM was used by using the `sacct` command to get post-run job info:
 
@@ -548,7 +636,12 @@ For most software, this choice is simple: 1. There are *very* few software packa
 
 ### Partitions (Queues)
 
-Partitions, or queues, are a grouping of computers to run a certain profile of jobs. This could be maximum run time, # of cores used, amount of max RAM, etc. On the Supercomputing Wales hubs each unique configuration of systems has its own partition. Earlier on we used the `sinfo` command to list the state of the cluster, one of the parameters this showed was the name of the partitions.
+Partitions, or queues, are a grouping of computers to run a certain
+profile of jobs. This could be maximum run time, number of cores used,
+maximum amount of RAM, etc. On the Supercomputing Wales hubs each
+unique configuration of systems has its own partition. Earlier on we
+used the `sinfo` command to list the state of the cluster, one of the
+parameters this showed was the name of the partitions.
 
 Here is the output of `sinfo` on Sunbird in Swansea.
 
@@ -563,7 +656,13 @@ gpu          up 2-00:00:00      4   idle scs[2001-2004]
 ~~~
 {: .output}
 
-The partition name is listed in the first column. The `*` next to the work partition denotes that it is the default. We can see that in total it contains 162 nodes. Each of these has 36GB of RAM and 12 Westmere cores. The `Large` partition only contains four nodes but each of these have 128GB of RAM and the older Nehalem processors. Finally the `vlarge` partition only contains one node, but this has 512GB of RAM and a Nehalem processor.
+The partition name is listed in the first column. The `*` next to the
+`compute` partition denotes that it is the default. We can see that in
+total it contains 122 nodes. Each of these has 384GB of RAM and 40
+Intel Xeon Scalable Silver cores. Meanwhile the `gpu` queue contains
+4 nodes, which have the same number of CPU cores and amount of RAM
+as those in the `compute` queue, but additionally have two NVIDIA
+Tesla V100 GPUs each.
 
 We can specify which partition a job runs in with the `-p` or `--partition` arguments to `sbatch`. So for example the following command will run our batch job on the compute partition.
 
