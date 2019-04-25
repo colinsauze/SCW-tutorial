@@ -45,9 +45,9 @@ an SSH client, and the Filezilla application for transferring files.
     <div class="col-md-4">
       <h4 id="ssh-windows">Windows</h4>
       <ol>
-        <li> If you are using Windows and also following the [Unix Shell](https://swcarpentry.github.io/shell-novice) lesson,
+        <li> If you are using Windows and also following the <a href="https://swcarpentry.github.io/shell-novice">Unix Shell</a> lesson,
 then the Git Bash tool installed as part of that lesson will provide you with this.</li>
-        <li> Otherwise, then download and install PuTTY from [https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).</li>
+        <li> Otherwise, then download and install <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">PuTTY</a>.</li>
       </ol>
     </div>
     <div class="col-md-4">
