@@ -137,19 +137,19 @@ Commercial software will require the appropriate licenses.
 > plt.plot(range(10))
 > plt.savefig('temp.png')
 > ~~~
-> {: python}
->
+> {: .python}
+> 
 > plot.sh script used in the exercises.
 >
 > ~~~
 > #!/bin/bash --login
 > ###
 > #job name
-> #SBATCH --job-name=hostname
+> #SBATCH --job-name=plotgraph
 > #job stdout file
-> #SBATCH --output=hostname.out.%J
+> #SBATCH --output=plotgraph.out.%J
 > #job stderr file
-> #SBATCH --error=hostname.err.%J
+> #SBATCH --error=plotgraph.err.%J
 > #maximum job time in D-HH:MM
 > #SBATCH --time=0-00:01
 > #number of tasks you are requesting
@@ -157,6 +157,8 @@ Commercial software will require the appropriate licenses.
 > #memory per process in MB
 > #SBATCH --mem=2
 > #SBATCH --nodes=1
+> #SBATCH --account=scwXXXX
+> #SBATCH --reservation=scwXXXX_Y
 > ###
 > module load python/3.7.0
 > python3 plot.py

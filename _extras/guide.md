@@ -63,7 +63,8 @@ Scratch dirs in /scratch/username
 # Running Jobs
 
 ## Interactive jobs
-`salloc -n 1 --ntasks-per-node=1 `
+Explain account and reservation codes. Export `SBATCH_ACCOUNT/RESERVATION` or `SALLOC_ACCOUNT/RESERVATION`
+`salloc -n 1 --ntasks-per-node=1 --account=SCW1389 --reservation=SCW1389_XX` 
 `srun --pty -n 1 /bin/bash`
 `squeue`
 
@@ -118,6 +119,8 @@ This runs multiple copies of the same thing within a job. Lets us use multiple n
 `#SBATCH --ntasks-per-node=1`
 
 `#SBATCH --nodes=2`
+`#SBATCH --account=SCW1380_X`
+`#SBATCH --reservation=SCW1380_X`
 
 `###`
 
@@ -153,11 +156,10 @@ Talk about mem, time, nodes and core allocations.
 
 `python3` - command not found
 `module avail`
-`module load python/3.7.0`
+`module load hpcw python/3.5.1`
 
 ## python modules
 
-`module load http-proxy`
 `pip3 install --user <mod>`
 `pip3 install --user sklearn`
 
@@ -185,14 +187,12 @@ crude way:
 `#job name`
 
 `#SBATCH --job-name=test`
-
 `#SBATCH --output=test.out.%J`
-
 `#SBATCH --error=test.err.%J`
-
 `#SBATCH --time=0-00:01`
-
 `#SBATCH --ntasks=3`
+`#SBATCH --account=SCW1380_X`
+`#SBATCH --reservation=SCW1380_X`
 
 `###`
 
@@ -252,6 +252,8 @@ parallel.sh:
 `#SBATCH -o output.%J              #Job output`
 
 `#SBATCH -t 00:00:05               #Max wall time for entire job`
+`#SBATCH --account=SCW1380_X`
+`#SBATCH --reservation=SCW1380_X`
 
 `###`
 
@@ -273,6 +275,14 @@ submit it:
 sacct will show 15 subjobs.
 
 parallel_joblog shows how long each took to run.
+
+More complex example, run hello with every combination of 1/2/3 and a/b/c (1a,1b,1c,2a....)
+
+`parallel echo "hello {1} {2}" ::: 1 2 3 ::: a b c`
+
+Treat arguments as pairs (e.g. 1a, 2b, 3c)
+
+`parallel echo "hello {1} {2}" ::: 1 2 3 :::+ a b c`
 
 ## Summary
 
@@ -308,7 +318,7 @@ python line_profiler is one of these
 
 install with
 
-`module load python/3.7.0`
+`module load hpcw python/3.5.1`
 
 `pip3 install --user line_profiler`
 
@@ -467,7 +477,7 @@ Install mpi4py
 
 `module load mpi`
 
-`module load python/3.7.0`
+`module load hpcw python/3.5.1`
 
 `pip3 install --user mpi4py`
 

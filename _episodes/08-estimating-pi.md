@@ -60,6 +60,7 @@ For generating pseudo-random numbers, we sample the uniform probability distribu
 Lola finishes writing the pi estimation and comes up with a [small python script]({{ page.root }}/code/serial_numpi.py), that she can launch from the command line:
 
 ~~~
+$ module load hpcw python/3.5.1
 $ python3 ./serial_numpi.py 1000000000
 ~~~
 {: .bash}
@@ -76,11 +77,9 @@ She must admit that the application takes quite long to finish. Yet another reas
 
 Before venturing out and trying to accelerate a program, it is utterly important to find the hot spots of it by means of measurements. For the sake of this tutorial, we use the [line_profiler](https://github.com/rkern/line_profiler) of python. Your language of choice most likely has similar utilities.
 
-to install the profiler, please issue the following commands. The first two commands load the python module, enabling the pip3 command and load the http-proxy module enabling internet access.
+to install the profiler, please issue the following commands. These load the python module, enabling the pip3 command and then install the module using pip3. Note that we have to use the legacy Python 3.5.1 which is part of the old HPC Wales modules, this is because the newer versions of Python were compiled with Intel's optimised C compiler but this isn't compatible with the line profiler. 
 
 ~~~
-$ module load python/3.5.1
-$ module load http-proxy
 $ pip3 install --user line_profiler
 ~~~
 {: .bash }
@@ -268,17 +267,17 @@ So this is a prime candidate for acceleration.
 > ## Word count
 >
 > Download [this python script]({{ page.root }}/code/count_pylibs.py) to your current directory. Run it by executing:
->
-> ~~~~~
+> ~~~
+>>>>>>> upstream/gh-pages
 > $ python3 count_pylibs.py
 > 4231827 characters and 418812 words found in standard python libs
-> ~~~~~
+> ~~~
 > {: .bash}
 >
 > Use the `line_profile` module to find the hot spot in this program!
 > > ## Solution
 > >
-> > ~~~~~
+> > ~~~
 > > Timer unit: 1e-06 s
 > >
 > > Total time: 0.334168 s
@@ -299,16 +298,19 @@ So this is a prime candidate for acceleration.
 > >     47         1            6      6.0      0.0          sys.exit(0)
 > >     48                                               else:
 > >     49                                                   sys.exit(1)
-> > ~~~~~
+> > ~~~
 > > The `word_count` function takes the longest time. Inside it, `re.split` hogs runtime the most.
 > {: .solution}
 {: .challenge}
 
 > ## Faster is always better, right?
+> 
+> Pair up and discuss the implementation of count_pylibs_annotated.py from the previous exercise. Discuss and answer the following points: 
 >
-> Pair up and discuss the implementation of count_pylibs_annotated.py from the previous exercise. Discuss and answer the following points:
-> 1. Find other ways to implement the word count without parallelizing the code!
+> 1. Find other ways to implement the word count without parallelizing the code! 
+>
 > 2. For every alternative implementation found in 1., check the output of the program. Did the number of words change? Could such a check be automated?
+>
 > 3. Compare the runtimes that you achieved throughout this exercise. Was your time worth it?
 >
 > > ## Solution

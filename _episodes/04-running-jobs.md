@@ -37,12 +37,13 @@ If you want to experiment with some code and test it you should run it this way.
 
 To get an interactive session, you first need to issue a `salloc` command to reserve some resources.
 
+
 ~~~
-salloc --nodes=1 --account=scw1389 --reservation=scw1389_13
+salloc --nodes=1 --account=scw1389 --reservation=scw1389_XX
 ~~~
 {: .bash}
 
-(You may need to replace `scw1389_13` with the reservation ID given by your instructor.)
+(You will need to replace `XX` to match the reservation ID given by your instructor.)
 
 The salloc command will respond now with a job ID number.
 
@@ -53,7 +54,16 @@ salloc: Nodes scs0018 are ready for job
 ~~~
 {: .output}
 
-We have now allocated ourselves a host to run a program on. The `-n 1` tells slurm how many copies of the task we will be running. The `--ntasks-per-node=1` tells slurm that we will just be running one task for every node we are allocated. We could increase either of these numbers if we want to run multiple copies of a task and if we want to run more than one copy per node.
+> ## Acccounts and Reservations
+>
+> We can optionally specify an account and reservation ID to Slurm. The account ID tells the system which  project your job will be accounted against, if you are a member of multiple projects some > might have > different priorities and limitations. A reservation is where some compute nodes have been reserved for a particular project at a particular time. To ensure nodes are available for this course we may have obtained a reservation. Your instructor will tell you which acccount and reservation to use here. The account can be specified either through the --account option to salloc (and the sbatch command which we'll use soon) and the reservation through the --reservation option. Alternatively these can be specified in the SALLOC_ACCOUNT, SBATCH_ACCOUNT, SALLOC_RESERVATION and SBATCH_RESERVATION environment variables. 
+{: .callout}
+
+We have now allocated ourselves a host to run a program on. The `-n 1` tells slurm how many copies of the task we will be running. The `--ntasks-per-node=1` tells Slurm that we will just be running one task for every node we are allocated. We could increase either of these numbers if we want to run multiple copies of a task and if we want to run more than one copy per node. 
+
+The `--account` option tells Slurm which project to account your usage against, if you are only a member of one project then this will default to that project. If you're a member of multiple projects then it will default to the first one. The accounting information is used to measure what resources a project has consumed and to prioritise its use, so its important to choose the right project. 
+
+To ensure nodes are available for this training workshop a reservation may have been made to prevent anyone else using a few nodes. In order to make use of these you must use the `--reservation` option too, if you don't then you'll have to wait in the same queue as everyone else. 
 
 To actually run a command we now need to issue the `srun` command. This also takes a `-n` parameter to tell Slurm how many copies of the job to run and it takes the name of the program to run. To run a job interactively we need another argument `--pty`.
 
@@ -163,8 +173,9 @@ nano batchjob.sh
 # change this for your own work
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
+# replace XX with the code provided by your instructor
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+#SBATCH --reservation=scw1389_XX
 ###
 
 /bin/hostname
@@ -266,7 +277,8 @@ Edit the script to have the command `/bin/sleep 70` before the `hostname` comman
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
 /bin/sleep 70
@@ -435,7 +447,8 @@ This will allow multiple copies of the command to run. In the example below two 
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
 srun /bin/hostname

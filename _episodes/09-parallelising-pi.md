@@ -226,6 +226,7 @@ This behavior is often referred to as _data parallelism_.
 > Verify your answer using profiling and computing the theoretical speed-up possible.
 >
 > Hint: download it by doing the following:
+>
 > ~~~
 > wget https://supercomputingwales.github.io/SCW-tutorial/code/volume_pylibs.py
 > ~~~
@@ -270,11 +271,11 @@ import numpy as np
 
 def estimate_pi(total_count,core_count):
 
-    count = pymp.shared.array((core_count,), dtype='float32')
+    count = pymp.shared.array((core_count,), dtype='int32')
 
     with pymp.Parallel(core_count) as p:
         for i in p.range(0,core_count):
-            local_count = inside_circle(total_count/core_count)
+            local_count = inside_circle(int(total_count/core_count))
 
             with p.lock:
                 count[i] = local_count
@@ -297,7 +298,7 @@ One thing we must be cautious of when writing parallel code is what happens when
 
 ![Partitioning `x` and `y` and results of reach partition]({{ page.root }}/fig/partition_data_parallel_estimate_pi_with_results.svg)
 
-The last step required before calculating pi is to collect the individual results from the `partitions` and _reduce_ it to one `total_count` of those random number pairs that were inside of the circle. Here the `sum` function loops over `partitions` and does exactly that. So let's run our [parallel implementation](/code/pymp_numpi.py) and see what it gives:
+The last step required before calculating pi is to collect the individual results from the `partitions` and _reduce_ it to one `total_count` of those random number pairs that were inside of the circle. Here the `sum` function loops over `partitions` and does exactly that. So let's run our [parallel implementation]({{ page.root }}/code/pymp_numpi.py) and see what it gives:
 
 ~~~
 $ module load hpcw
@@ -365,7 +366,9 @@ That means, our parallel implementation does already a good job, but only achiev
 > Hyperthreading is an extension found in some CPUs where some parts of the CPU core are duplicated. These appear to most programs as extra cores and can cause core counts to be reported as double what they really are.
 > The performance boost of Hyperthreading varies between a small performance reduction and 15-30%. When performing identical simple tasks on every CPU as in our example there is unlikely to be any performance gain.
 > On Linux systems the `lscpu` command will display information about the CPU including the number of threads, cores and CPUs. The line "Thread(s) per core" will be 1 if there's no Hyperthreading and 2 or more if there is.
+>
 > System with Hyperthreading:
+>
 > ~~~
 > $ lscpu
 > Architecture:          x86_64                                                                                                                                                             
@@ -394,7 +397,9 @@ That means, our parallel implementation does already a good job, but only achiev
 > NUMA node0 CPU(s):     0-3
 > ~~~
 > {: .bash}
+>
 > System without Hyperthreading:
+>
 > ~~~
 > $ lscpu
 > Architecture:          x86_64

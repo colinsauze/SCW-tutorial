@@ -42,9 +42,10 @@ $ cat call_hostname.sh
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
-
+module load mpi
 mpirun hostname
 ~~~
 {: .bash}
@@ -123,7 +124,9 @@ Now we can run the program by putting the following into py_mpi_hostname.sh
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
+
 ###
 
 module load mpi
@@ -175,7 +178,7 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 > > #SBATCH --output=mpi_date.out.%J.%N
 > > #SBATCH --error=mpi_date.err.%J.%N
 > > #SBATCH --account=scw1389
-> > #SBATCH --reservation=scw1389_13
+> > #SBATCH --reservation=scw1389_XX
 > > ###
 > > module load mpi
 > > mpirun date +%M:%S.%N
@@ -186,7 +189,7 @@ Again, the unordered output is visible. Now, the relation between the rank and t
 
 > ## Upgrade `print_hostname.py` and print the time-of-day as well
 >
-> Download the [`print_hostname.py`]({{ page.root }}/code/print_hostname.py) script if you haven't already (module load http-proxy ; wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py)
+> Download the [`print_hostname.py`]({{ page.root }}/code/print_hostname.py) script if you haven't already (`wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py`)
 > Open the `print_hostname.py` script with your editor and use the python3 `datetime` module to print the time of day next to the host name and rank number.
 >
 > > ## Solution
@@ -289,8 +292,9 @@ if rank == 0:
 And that's it. Now, Lola can submit her first MPI job. Download the [full code]({{ page.root }}/code/mpi_numpi.py) to try it yourself.
 
 You can download it on the HPC with the command:
+
 ~~~
-wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
+wget https://supercomputingwales.github.io/SCW-tutorial/code/mpi_numpi.py
 ~~~
 {:. bash}
 
@@ -309,9 +313,11 @@ wget https://supercomputingwales.github.io/SCW-tutorial/code/print_hostname.py
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
+module load hpcw
 module load python/3.5.1
 module load mpi
 mpirun python3 mpi_numpi.py 1000000000                          

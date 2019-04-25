@@ -36,7 +36,8 @@ A crude way to achieve this is to have our job submission script just run multip
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
 command1 &
@@ -101,7 +102,7 @@ Here we specify what command to run first and the put the data to process second
 
 ### A more complex example
 
-As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfici Gyre. She has 1520 data files, each of which measure the relative abundnace of 300 different proteins. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample.
+As an example we're going to use the example data from the Software Carpentry [Unix Shell lesson](http://swcarpentry.github.io/shell-novice/). This features some data from a researcher named Nelle who is studying the North Pacfic Gyre. She has 1520 data files, each of which measure the relative abundnace of 300 different proteins. Each file is named NENE followed by a 5 digit number identifying the sample and finally an A or a B to identify which of two machines analysed the sample.
 
 #### Downloading the Data
 
@@ -181,7 +182,8 @@ First lets create a job submission script and call it `parallel_1node.sh`.
 #SBATCH --account=scw1389
 # specify the reservation we have for the training workshop
 # remove this for your own work
-#SBATCH --reservation=scw1389_13
+# replace XX with the code provided by your instructor
+#SBATCH --reservation=scw1389_XX
 ###
 
 # Ensure that parallel is available to us
