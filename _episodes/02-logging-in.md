@@ -48,8 +48,8 @@ These figures may still be subject to some change and might have been sourced fr
 |Partition|Number of Nodes|Cores per node|RAM|Other|
 |-------|----|----|------|----|------|
 |Swansea Compute|122|40|382GB||
-|Swansea GPU|4|40|382GB|Nvidia V100 (5120 core, 16GB RAM)|
-|Swansea Data Lake|1|72|1500GB|Installed with Swansea system, not available for general use yet. Intended for Hadoop and Elastic Stack users.|
+|Swansea GPU|4|40|382GB|2x Nvidia V100 (5120 core, 16GB RAM)|
+|Swansea Data Lake|1|72|1500GB|Installed with Swansea system, and intended for e.g. Hadoop and Elastic Stack users. Not integrated with the main Sunbird system; contact Support or your RSE team for access details.|
 
 
 |Cluster|Number of Nodes|Cores per node|RAM|Other|
@@ -66,7 +66,9 @@ Aberystwyth and Swansea users are expected to use the Swansea system and will ne
 
 ### Slurm
 
-Slurm is the management software used on Supercomputing Wales. It lets you submit (and monitor or cancel) jobs to the cluster and chooses where to run them.
+Slurm is the management software used on Supercomputing Wales. It lets
+you submit (and monitor or cancel) jobs to the cluster, and chooses
+when and where to run them.
 
 Other clusters might run different job management software such as LSF, Sun Grid Engine or Condor, although they all operate along similar principles.
 
