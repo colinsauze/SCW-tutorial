@@ -34,13 +34,18 @@ One common piece of software that isn't installed on the Supercomputing Wales hu
 ~~~
 {: .output}
 
-**Note that the head node and the compute nodes have identical configurations in terms of what software is available, so you can discover if your program will run from the head node**
+**Note that the login nodes and the compute nodes have identical
+configurations in terms of what software is available, so you can
+discover if your program will run from the login nodes**
 
-From the output of the `module avail` command there should have been an entry `python/3.7.0` in the `/app/modules/langauges` section near the top. Lets go ahead and load this using the
-Lets load Python version 3.7.0 as a module and attempt to run the python3 command. This should start a Python3 interpreter, we can exit python by either pressing Ctrl+d or typing `exit()` and pressing enter.
+From the output of the `module avail` command there should have been
+an entry `anaconda/2019.03` in the `/app/local/modules/langauges` section
+near the bottom. Anaconda is a distribution including a variety of
+Python packages, and tools for managing them. Let's go ahead and load it.
 
 ~~~
-[s.jane.doe@sl1 ~]$ module load python/3.7.0
+[s.jane.doe@sl1 ~]$ module load anaconda/2019.03
+[s.jane.doe@sl1 ~]$ source activate
 [s.jane.doe@sl1 ~]$ python3
 Python 3.7.0 (default, Jul 13 2018, 10:08:05)
 [GCC Intel(R) C++ gcc 4.8.5 mode] on linux
@@ -63,62 +68,78 @@ Type "help", "copyright", "credits" or "license" for more information.
 Python is a popular language for researchers to use and has modules
 (aka libraries) that do all kinds of useful things, but sometimes the
 module you need won't be installed. Many modules can be installed
-using the `pip` (or `pip3` with Python 3) command.
-
-We also don't have permissions to install pip modules for the whole
-system, so we need to give `pip` the `--user` argument which tells us
-to install in our home directory.
-
-~~~
-[s.jane.doe@sl1 ~]$  pip3 install --user <modulename>
-~~~
-{: .bash}
-
-Lets install the scikit-learn (`sklearn`)  module, this is a module which is useful for machine learning tasks but isn't installed on the Supercomputing Wales hubs by default.
+using the `pip` (or `pip3` with Python 3) command. Since we don't have
+administrative rights to the supercomputer, we can't install these
+into the shared base Anaconda environment; instead, we need to create
+a local one.
 
 ~~~
-[s.jane.doe@sl1 ~]$  pip3 install --user sklearn
-Collecting sklearn
-  Downloading sklearn-0.0.tar.gz
-Collecting scikit-learn (from sklearn)
-  Downloading scikit_learn-0.19.1-cp35-cp35m-manylinux1_x86_64.whl (12.2MB)
-    100% | ************* | 12.2MB 50kB/s
-Installing collected packages: scikit-learn, sklearn
-  Running setup.py install for sklearn ... done
-Successfully installed scikit-learn-0.19.1 sklearn-0.0
-You are using pip version 10.0.1, however version 18.0 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.
-[s.jane.doe@sl1 ~]$
+$ conda create -n scw_test python=3.7
 ~~~
 {: .bash}
 
-Let's test that `sklearn` has been installed by loading its example `digits` dataset:
+This tells the `conda` command to `create` a new environment, to
+give it the name `scw_test`, and to install Python 3.7 into it.
+Conda will take a little time to work out what it needs to install,
+and once you confirm by typing `y`, then place it in a new directory
+in `~/.conda/envs`.
+
+Once your environment is created, you can activate it so you can
+use it to work in with the command
 
 ~~~
-[s.jane.doe@sl1 ~]$ python3
-Python 3.5.1 (default, Jun 22 2016, 13:43:55)
-[GCC Intel(R) C++ gcc 4.4.7 mode] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> from sklearn import datasets
->>> digits = datasets.load_digits()
->>> print(digits.data)
-[[  0.   0.   5. ...,   0.   0.   0.]
- [  0.   0.   0. ...,  10.   0.   0.]
- [  0.   0.   0. ...,  16.   9.   0.]
- ...,
- [  0.   0.   1. ...,   6.   0.   0.]
- [  0.   0.   2. ...,  12.   0.   0.]
- [  0.   0.  10. ...,  12.   1.   0.]]
+$ conda activate scw_test
 ~~~
 {: .bash}
 
-The outputted data is provided by `sklearn`, and so we see that the
-module is successfully installed.
+The prefix at the start of your prompt will now change from `base`
+to `scw_test`, to indicate the environment that you have active.
+Similarly, `which python` now returns
+`~/.conda/envs/scw_test/bin/python`, indicating that this is now
+where Python will run from if you run `python`.
+
+So far we have created a relatively bare environemnt, but we can
+install packages into the new environment just as we can on our own
+machines. Let's now install Matplotlib into this environment:
+
+~~~
+$ conda install matplotlib
+~~~
+{: .bash}
+
+Conda automatically works out which extra packages need to be present
+for Matplotlib to work, and then prompts to install them.
+
+You could alternatively have specified `matplotlib` directly to the
+`conda create` command, and it would have been installed when the
+environment was created.
+
+If you wanted to create a full Anaconda Python installation to base
+your environment on, you can do this with
+`conda create -n [name] anaconda`; we don't do this here because
+it creates a very large number of files and takes a substantial
+time to download and install. In general, it's better to only
+install packages that you need, since they are less likely to
+conflict with each other.
+
+Using `pip` works very similarly to Python; provided the Anaconda
+module is loaded and your Conda environment is activated, then `pip`
+will automatically install into your Conda environment and not try to
+install at the system level.
+
+For more detail on using Python with Supercomputing Wales, see the
+training on [High Performance
+Python](https://edbennett.github.io/high-performance-python).
+
 
 ## How to install other software yourself
 
-*For Perl & Python modules or R packages*, we encourage you to set up directories in your
-home and/or lab folders for installing your own copies locally. Instructions on how to install these are available from the [How To](https://portal.supercomputing.wales/index.php/index/how-to-guides-archive/) pages on the Supercomputing Wales portal.
+*For Perl modules and R packages*, we encourage you to set up
+directories in your home and/or lab folders for installing your own
+copies locally. Instructions on how to install these are available
+from the [How
+To](https://portal.supercomputing.wales/index.php/index/how-to-guides-archive/)
+pages on the Supercomputing Wales portal.
 
 ## Requesting additional software
 
@@ -175,7 +196,8 @@ Commercial software will require the appropriate licenses.
 >    # replace XX with the code provided by your instructor
 >    #SBATCH --reservation=scw1389_XX
 >    ###
->    module load python/3.7.0
+>    module load anaconda/2019.03
+>    source activate scw_test
 >    python3 plot.py
 >    ~~~
 >    {: .bash}
