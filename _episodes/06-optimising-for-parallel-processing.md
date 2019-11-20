@@ -405,7 +405,7 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 >> # --joblog name     parallel's log file of tasks it has run
 >> 
 >> # Run the tasks:
->> $parallel "$srun Rscript {1} {2} {3}" ::: -10 -8 -6 -4 -2 0 2 4 6 8 10 ::: -9 -6 -3 0 3 6 9 ::: -2 -1 0 1 2 3 4
+>> $parallel "$srun Rscript graph.r {1} {2} {3}" ::: -10 -8 -6 -4 -2 0 2 4 6 8 10 ::: -9 -6 -3 0 3 6 9 ::: -2 -1 0 1 2 3 4
 >> ~~~
 >> {: .bash}
 > {: .solution}
@@ -439,7 +439,7 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 >> # --joblog name     parallel's log file of tasks it has run
 >> 
 >> # Run the tasks:
->> $parallel "$srun Rscript {1} {2} {3}" :::: A.txt :::: B.txt :::: C.txt
+>> $parallel "$srun Rscript graph.r {1} {2} {3}" :::: A.txt :::: B.txt :::: C.txt
 >> ~~~
 >> {: .bash}
 > {: .solution}
