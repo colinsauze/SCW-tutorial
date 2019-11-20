@@ -302,6 +302,18 @@ This will take a minute or so to run. If we watch the output of `sacct` we shoul
 ~~~
 {: .output}
 
+By default, `sacct` gives us the job's ID and name, the partition it
+ran on, the account code of the project that the job ran under, the
+number of CPUs allocated to it, its state, and its exit code. However,
+we can change this. Since we would like to check that our tasks were
+distributed amongst the various nodes, we can ask `sacct` to report on
+this:
+
+~~~
+sacct --format=JobID,JobName,Partition,AllocCPUs,State,NTasks,NodeList
+~~~
+{: .bash}
+
 The file `parallel_joblog` will contain a list of when each job ran and how long it took.
 
 ~~~
@@ -324,6 +336,125 @@ Seq     Host    Starttime       JobRuntime      Send    Receive Exitval Signal  
 ~~~
 {: .output}
 
+
+> ## Running another program with GNU Parallel
+>
+> The following R program plots a graph based on some command-line
+> parameters.
+>
+> ~~~
+> args <- commandArgs(trailingOnly = TRUE)
+> A <- as.numeric(args[1])
+> B <- as.numeric(args[2])
+> C <- as.numeric(args[3])
+>
+> pdf(sprintf("quadratic_%s_%s_%s.pdf", A, B, C))
+>
+> curve(A * x^2 + B * x + C)
+> title(main = sprintf("f(x) = %s x^2 + %s x + %s", A, B, C))
+> ~~~
+> {: .r}
+>
+> Copy the code into a new file called `graph.r` and try running it at
+> the command line with:
+>
+> ~~~
+> $ Rscript graph.r 1 2 3
+> ~~~
+> {: .r}
+>
+> You will need to load the R/3.6.0 module.
+>
+> Now, adapt the submission script above to run this program and
+> perform a parameter scan, with `A` taking values from -10 to 10 in
+> steps of 2, `B` running from -9 to 9 in steps of 3, and `C` running
+> from -2 to 4 in steps of 1. This gives 539 individual runs, which
+> would be very cumbersome to run by hand.
+>
+> This can be done by specifying the choices for `A`, `B`, and `C`
+> directly in the call to `parallel`, or by storing them in files
+> and giving the filenames to `parallel`. Try both and see which is
+> more convenient for you.
+>
+> Once you have run your script, use `sacct` to see which nodes the
+> tasks ran on.
+>
+>> ## Solution with direct arguments
+>>
+>> ~~~
+>> #!/bin/bash --login
+>> ###
+>> #SBATCH --ntasks 80
+>> #SBATCH --output output.%J
+>> #SBATCH --time 00:01:00
+>> #SBATCH --account=scw1389
+>> #SBATCH --reservation=scw1389_XX
+>> ###
+>> 
+>> # Ensure that parallel is available to us
+>> module load parallel
+>> module load R/3.6.0
+>> 
+>> # Define srun arguments:
+>> srun="srun --nodes 1 --ntasks 1"
+>> # --nodes 1 --ntasks 1         allocates a single core to each task
+>> 
+>> # Define parallel arguments:
+>> parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
+>> # --max-procs $SLURM_NTASKS  is the number of concurrent tasks parallel runs, so number of CPUs allocated
+>> # --joblog name     parallel's log file of tasks it has run
+>> 
+>> # Run the tasks:
+>> $parallel "$srun Rscript {1} {2} {3}" ::: -10 -8 -6 -4 -2 0 2 4 6 8 10 ::: -9 -6 -3 0 3 6 9 ::: -2 -1 0 1 2 3 4
+>> ~~~
+>> {: .bash}
+> {: .solution}
+>
+>> ## Solution with arguments in files
+>>
+>> Assuming the files `A.txt`, `B.txt` and `C.txt` contain the numbers
+>> required, then the following script will work.
+>>
+>> ~~~
+>> #!/bin/bash --login
+>> ###
+>> #SBATCH --ntasks 80
+>> #SBATCH --output output.%J
+>> #SBATCH --time 00:01:00
+>> #SBATCH --account=scw1389
+>> #SBATCH --reservation=scw1389_XX
+>> ###
+>> 
+>> # Ensure that parallel is available to us
+>> module load parallel
+>> module load R/3.6.0
+>> 
+>> # Define srun arguments:
+>> srun="srun --nodes 1 --ntasks 1"
+>> # --nodes 1 --ntasks 1         allocates a single core to each task
+>> 
+>> # Define parallel arguments:
+>> parallel="parallel --max-procs $SLURM_NTASKS --joblog parallel_joblog"
+>> # --max-procs $SLURM_NTASKS  is the number of concurrent tasks parallel runs, so number of CPUs allocated
+>> # --joblog name     parallel's log file of tasks it has run
+>> 
+>> # Run the tasks:
+>> $parallel "$srun Rscript {1} {2} {3}" :::: A.txt :::: B.txt :::: C.txt
+>> ~~~
+>> {: .bash}
+> {: .solution}
+{: .challenge}
+
+> ## Don't forget `srun`
+>
+> When using GNU Parallel to run tasks on multiple nodes, it's crucial
+> that both `$parallel` and `$srun` from the script above are
+> included. If you use `parallel` instead of `$parallel`, then GNU
+> Parallel won't know how many tasks Slurm can run, and will
+> automatically use 40. If you don't include `$srun`, then Parallel
+> will run all tasks on the same node, and any other nodes that are
+> allocated will sit idle.
+{: .callout}
 
 ### More complex command handling with Parallel
 
